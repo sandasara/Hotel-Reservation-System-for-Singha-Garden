@@ -24,5 +24,6 @@ router.register(r'reservations', views.ReservationView, 'reservation')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include(router.urls))
+    path('api/', include(router.urls)),
+    path('api/just/', views.JustView.as_view(), name='j')
 ]

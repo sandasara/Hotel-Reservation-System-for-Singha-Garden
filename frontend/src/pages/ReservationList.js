@@ -9,16 +9,18 @@ const ReservationList = () => {
     }, [])
 
     let getReservations = async () => {
-
         let response = await fetch('http://127.0.0.1:8000/api/reservations/')
         let data = await response.json()
-        console.log('Data: ', data)
         setReservations(data)
     }
 
     return (
         <div>
-            ReservationList
+            <div className="reservations-list">
+                {reservations.map((reservation, index) => (
+                   <h3>{reservation.body}</h3>
+                ))}
+            </div>
         </div>
     )
 }
