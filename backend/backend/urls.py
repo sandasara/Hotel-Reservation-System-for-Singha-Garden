@@ -16,14 +16,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from garden import views
-from rest_framework import routers
+# from rest_framework import routers
 
-router = routers.DefaultRouter()
-router.register(r'reservations', views.ReservationView, 'reservation')
+# router = routers.DefaultRouter()
+# router.register(r'reservations', views.ReservationView, 'reservation')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include(router.urls)),
-    path('api/just/', views.JustView.as_view(), name='j')
+    path('api/', include('garden.urls'))
+    # path('api/', include(router.urls)),
+    # path('api/just/', views.JustView.as_view(), name='j')
 ]

@@ -11,6 +11,7 @@ const ReservationList = () => {
     let getReservations = async () => {
         let response = await fetch('http://127.0.0.1:8000/api/reservations/')
         let data = await response.json()
+        console.log('DATA: ', data)
         setReservations(data)
     }
 
