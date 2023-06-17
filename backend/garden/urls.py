@@ -6,5 +6,4 @@ urlpatterns = [
     path('reservations/', views.getReservationsList, name='reservations'),
     path('reservations/<str:pk>', views.getReservationDetail, name='reservation')
     # path('api/', include(router.urls)),
-    # path('api/just/', views.JustView.as_view(), name='j')
 ]

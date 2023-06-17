@@ -1,13 +1,10 @@
-import './App.css';
-import Confirm from './components/Confirm'
-import ReservationList from './pages/ReservationList'
-
+import React from 'react';
+import Home from './pages/Home';
 
 function App() {
   return (
-    <div className="App">
-        <Confirm />
-        <ReservationList />
+    <div>
+      <Home />
     </div>
   );
 }
