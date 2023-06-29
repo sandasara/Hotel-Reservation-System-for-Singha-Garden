@@ -1,28 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react'
+import Navbar from '../components/Navbar'
+import GetReservations from '../components/GetReservations'
 
 const ReservationList = () => {
-
-    let [reservations, setReservations] = useState([])
-
-    useEffect(() => {
-        getReservations()
-    }, [])
-
-    let getReservations = async () => {
-        let response = await fetch('http://127.0.0.1:8000/api/reservations/')
-        let data = await response.json()
-        setReservations(data)
-    }
-
-    return (
-        <div className="App">
-            <div className="reservations-list">
-                {reservations.map((reservation, index) => (
-                   <h3>{reservation.body}</h3>
-                ))}
-            </div>
-        </div>
-    )
+  return (
+    <div>
+        <Navbar />
+        <GetReservations />
+    </div>
+  )
 }
 
-export default ReservationList;
+export default ReservationList

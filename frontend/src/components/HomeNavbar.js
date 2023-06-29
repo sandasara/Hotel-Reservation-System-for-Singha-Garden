@@ -12,7 +12,7 @@ import {
   FaYoutube,
 } from 'react-icons/fa';
 
-const Navbar = () => {
+const HomeNavbar = () => {
 
     const [nav, setNav] = useState(false);
     const [logo, setLogo] = useState(false)
@@ -22,16 +22,16 @@ const Navbar = () => {
     };
 
   return (
-    <div className='flex w-full justify-between items-center h-20 px-4 relative z-10 text-black'>
+    <div className='flex w-full justify-between items-center h-20 px-4 absolute z-10 text-white'>
         <div>
             <h1 onClick={handleNav} className={logo ? 'hidden' : 'block'}>GARDEN</h1>
         </div>
         <ul className='hidden md:flex'>
             <li><Link to='/'>Home</Link></li>
-            <li><Link to='/rooms'>Rooms</Link></li>
-            <li><Link to='/about'>About Us</Link></li>
-            <li><Link to='/contact'>Contact</Link></li>
-            <li><Link to='/book'>Book Now</Link></li>
+            <li><Link to='/Rooms'>Rooms</Link></li>
+            <li><Link to='/About'>About Us</Link></li>
+            <li><Link to='/Contact'>Contact</Link></li>
+            <li><Link to='/Book'>Book Now</Link></li>
 
       </ul>
       <div className='hidden md:flex'>
@@ -70,4 +70,4 @@ const Navbar = () => {
   )
 }
 
-export default Navbar
+export default HomeNavbar

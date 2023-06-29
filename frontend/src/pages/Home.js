@@ -1,6 +1,6 @@
 import React from 'react'
 
-import Navbar from '../components/Navbar';
+import HomeNavbar from '../components/HomeNavbar';
 import Hero from '../components/Hero';
 import Footer from '../components/Footer';
 import Rooms from '../components/Rooms';
@@ -9,7 +9,7 @@ import Search from '../components/Search';
 function Home() {
   return (
     <div>
-      <Navbar />
+      <HomeNavbar />
       <Hero />
       <Rooms />
       <Search />

@@ -67,15 +67,36 @@ def getRoutes(request):
 # pylint: disable=E1101
 @api_view(['GET'])
 def getReservationsList(request):
-    Reservations = Reservation.objects.all()
-    serializer = ReservationSerializer(Reservations, many=True)
+    reservations = Reservation.objects.all()
+    serializer = ReservationSerializer(reservations, many=True)
     return Response(serializer.data)
 
 # pylint: disable=E1101
 @api_view(['GET'])
 def getReservationDetail(request, pk):
-    Reservations = Reservation.objects.get(reservation_id=pk)
-    serializer = ReservationSerializer(Reservations, many=False)
+    reservations = Reservation.objects.get(reservation_id=pk)
+    serializer = ReservationSerializer(reservations, many=False)
+    return Response(serializer.data)
+
+@api_view(['POST'])
+def createReservation(request):
+    data = request.data
+    reservation = Reservation.objects.create(
+        reservation_id = data['reservation_id']
+    )
+    serializer = ReservationSerializer(reservation, many=False)
+    return Response(serializer.data)
+
+
+@api_view(['PUT'])
+def updateReservation(request, pk):
+    data = request.data
+    reservation = Reservation.objects.get(reservation_id=pk)
+    serializer = ReservationSerializer(instance=reservation, data=data)
+
+    if serializer.is_valid():
+        serializer.save()
+
     return Response(serializer.data)
 
 # @api_view(['GET', 'POST'])

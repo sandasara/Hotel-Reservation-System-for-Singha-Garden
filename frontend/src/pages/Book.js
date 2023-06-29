@@ -2,7 +2,7 @@ import React from 'react'
 import Navbar from '../components/Navbar'
 import MakeReservationForm from '../components/MakeReservationForm'
 
-function About() {
+function Book() {
   return (
     <div>
         <Navbar />
@@ -11,4 +11,4 @@ function About() {
   )
 }
 
-export default About
+export default Book

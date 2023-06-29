@@ -9,28 +9,24 @@ import App from './App';
 import RoomsPage from './pages/RoomsPage';
 import About from './pages/About';
 import Contact from './pages/Contact';
-import Home from './pages/Home';
+import Book from './pages/Book';
+import ReservationList from './pages/ReservationList';
+import GetSingleReservation from './components/GetSingleReservation';
 
 const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Home />,
-  },
+  { path: "/", element: <App />, },
 
-  {
-    path: "/Rooms",
-    element: <RoomsPage />,
-  },
+  { path: "/rooms", element: <RoomsPage />, },
 
-  {
-    path: "/About",
-    element: <About />,
-  },
+  { path: "/about", element: <About />, },
 
-  {
-    path: "/Contact",
-    element: <Contact />,
-  },
+  { path: "/contact", element: <Contact />, },
+
+  { path: "/book", element: <Book />, },
+
+  { path: "/reservations", element: <ReservationList />, },
+
+  { path: "/reservation/:id", element: <GetSingleReservation />, },
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

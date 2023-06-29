@@ -23,14 +23,18 @@ const Hero = () => {
           rounded-md text-black bg-gray-100/90'
         >
           <div>
+          <div className='flex flex-col my-4'>
+                <label>Check-In</label>
             <input
               className='bg-transparent w-[100px] sm:w-[200px] font-[Poppins] focus:outline-none p-1'
               type='date'
             />
+            {/* <label>Check-In</label>
             <input
               className='bg-transparent w-[100px] sm:w-[200px] font-[Poppins] focus:outline-none p-1'
               type='date'
-            />
+            /> */}
+            </div>
           </div>
           <div>
             <button className='mx-6'>
