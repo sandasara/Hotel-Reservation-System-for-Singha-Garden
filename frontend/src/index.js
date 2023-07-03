@@ -26,7 +26,7 @@ const router = createBrowserRouter([
 
   { path: "/reservations", element: <ReservationList />, },
 
-  { path: "/reservation/:id", element: <GetSingleReservation />, },
+  { path: "/reservations/:id", element: <GetSingleReservation />, },
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

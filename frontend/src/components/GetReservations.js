@@ -9,7 +9,7 @@ const GetReservations = () => {
     }, [])
 
     let getReservations = async () => {
-        let response = await fetch('http://127.0.0.1:8000/api/reservations/')
+        let response = await fetch('/api/reservations/')
         let data = await response.json()
         setReservations(data)
     }

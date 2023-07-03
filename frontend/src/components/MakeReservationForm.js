@@ -4,11 +4,11 @@ function MakeReservationForm() {
   return (
     <div className='mx-16 my-8'>
       <div className='container mx-auto'>
-          <div className='w-full lg:w-1/2 p-5 bg-emerald-200'>
+          <div className='w-full lg:w-1/2 p-5 rounded-md border-2 border-neutral-950'>
           <div>
               <h3>Confirm your stay</h3>
           </div>
-            <div className='w-full mt-10'>
+            <div className='mt-10'>
               <form>
                   <div className="grid grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-2">
                     <div>
@@ -18,7 +18,7 @@ function MakeReservationForm() {
                             name="first-name" 
                             id="first-name"  
                             autoComplete="given-name" 
-                            className="flex w-full rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                            className="flex w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
                     </div>
                     <div>
                     <label>Last name</label>
@@ -43,13 +43,13 @@ function MakeReservationForm() {
                       <input 
                           type="tel" 
                           name="tel" 
-                          id="rel"  
+                          id="tel"  
                           autoComplete="given-name" 
                           className="flex w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />    
                     </div>
                   </div>
                   <div className='mt-8 mb-8'>
-                  <label>Adress</label>
+                  <label>Address</label>
                       <input 
                           type="text" 
                           name="address" 
@@ -345,6 +345,69 @@ function MakeReservationForm() {
                   </div>
               </form>
             </div>
+            <div className='mt-20'>
+              <h3>Card details</h3>
+            </div>
+            <div className='mt-10'>
+              <form>
+                <div className='grid grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-2'>
+                  <div>
+                      <label>Card no.</label>
+                        <input 
+                            type="number" 
+                            name="cardno" 
+                            id="cardno"  
+                            autoComplete="given-name" 
+                            className="flex w-full rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                  </div>
+                  <div className='grid grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-2'>
+                  <div>
+                    <label>Month</label>
+                      <input 
+                          type="number" 
+                          name="expmonth" 
+                          id="expmonth"  
+                          autoComplete="given-name" 
+                          className="flex w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />    
+                  </div>
+                  <div>
+                    <label>Year</label>
+                      <input 
+                          type="nmber" 
+                          name="expyear" 
+                          id="expyear"  
+                          autoComplete="given-name" 
+                          className="flex w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />    
+                  </div>
+                  </div>
+                  </div>
+                  <div className='grid grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-2 mt-8'>
+                  <div>
+                      <label>Name on card</label>
+                        <input 
+                            type="number" 
+                            name="cardno" 
+                            id="cardno"  
+                            autoComplete="given-name" 
+                            className="flex w-full rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                  </div>
+                  <div className='grid grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-2'>
+                  <div>
+                    <label>cvv</label>
+                      <input 
+                          type="number" 
+                          name="cvv" 
+                          id="cvv"  
+                          autoComplete="given-name" 
+                          className="flex w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />    
+                  </div>
+                  </div>
+                  </div>
+              </form>
+            </div>
+          <div>
+
+          </div>
           </div>
       </div>
     </div>

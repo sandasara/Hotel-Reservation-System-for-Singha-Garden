@@ -1,13 +1,12 @@
-import React from 'react'
+import React from 'react';
 import { useParams } from 'react-router-dom';
 
-const GetSingleReservation = ({ useParams }) => {
-    const { id } = useParams()
-    let reservationId = id
+const GetSingleReservation = () => {
+const { id } = useParams();
 
-  return (
-    <div>GetSingleReservation{reservationId}</div>
-  )
-}
+return (
+<div>GetSingleReservation {id}</div>
+);
+};
 
-export default GetSingleReservation
+export default GetSingleReservation;
