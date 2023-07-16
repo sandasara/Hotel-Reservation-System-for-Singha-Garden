@@ -5,6 +5,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.db.models import Q
 from .serializers import *
 from .models import *
+import json
 # from .utils import update_reservation,
 #                    get_reservation,
 #                    deleteReservation,
@@ -86,32 +87,37 @@ def search_rooms(request):
     Gets room search parametersfrom frontend and query to find the available rooms.
     Then return available rooms.
     """
-    check_in = request.data.get('checkIn')
-    check_out = request.data.get('checkOut')
-    adults = request.data.get('adults')
-    children = request.data.get('children')
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            check_in = data.get('checkIn')
+            check_out = data.get('checkOut')
+            adults = data.get('adults')
+            children = data.get('children')
 
-    if not all([check_in, check_out, adults, children]):
-        return JsonResponse({'error': 'Missing required parameters'})
+            if not all([check_in, check_out, adults, children]):
+                return JsonResponse({'error': 'Missing required parameters'})
 
-    # Query available rooms based on user inputs and reservations
-    reservations = Reservation.objects.filter(
-        Q(check_in__lte=check_in, check_out__gt=check_in) |
-        Q(check_in__lt=check_out, check_out__gte=check_out) |
-        Q(check_in__gte=check_in, check_out__lte=check_out)
-    )
+            # Query available rooms based on user inputs and reservations
+            reservations = Reservation.objects.filter(
+                Q(check_in__lte=check_in, check_out__gt=check_in) |
+                Q(check_in__lt=check_out, check_out__gte=check_out) |
+                Q(check_in__gte=check_in, check_out__lte=check_out)
+            )
 
-    reserved_room_ids = reservations.values_list('room_id', flat=True)
+            reserved_room_ids = reservations.values_list('room_id', flat=True)
 
-    available_rooms = Room.objects.exclude(id__in=reserved_room_ids)
+            available_rooms = Room.objects.exclude(room_id__in=reserved_room_ids)
 
-    # Serialize room objects into JSON
-    room_data = []
-    for room in available_rooms:
-        room_data.append({
-            'room_id': room.room_id,
-            'room_name': room.room_name,
-            'room_price': room.room_price,
-        })
+            # Serialize room objects into JSON
+            room_data = []
+            for room in available_rooms:
+                room_data.append({
+                    'room_id': room.room_id,
+                    'room_name': room.room_name,
+                    'room_price': room.room_price,
+                })
+        except json.JSONDecodeError:
+            return JsonResponse({'error': 'Invalid JSON data'})
 
     return JsonResponse({'rooms': room_data})

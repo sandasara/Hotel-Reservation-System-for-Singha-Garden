@@ -34,12 +34,17 @@ const validate = values => {
   };
 
   const onSubmit = async (values) => {
-
-    const { formData } = values;
-
-    const response = await axios.post('http://127.0.0.1:8000/api/rooms/available_rooms/', formData)
-    console.log(response.data)
-        
+    console.log(values)
+    try{
+        const response = await axios.post('http://127.0.0.1:8000/api/rooms/available_rooms/', values)
+        console.log(response.data)
+        const { rooms} = response.data
+        console.log(rooms)
+        // setAvailableRooms(rooms)
+        // navigate('/rooms/available')
+    } catch (error) {
+        console.log(error);
+    }     
   };
 
 const Searchbar = () => {
