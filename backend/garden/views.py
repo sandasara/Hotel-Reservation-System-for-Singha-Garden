@@ -1,85 +1,41 @@
-# from django.shortcuts import render
-# from rest_framework import viewsets
-# from rest_framework.views import APIView
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .serializers import ReservationSerializer
-from .models import Reservation
-# from .utils import updateReservation, getReservationDetail, deleteReservation, getReservationsList, createReservation
-
-# Create your views here.
-
-# pylint: disable=E1101
-# class ReservationView(viewsets.ModelViewSet):
-#     queryset = Reservation.objects.all()
-#     serializer_class = ReservationSerializer
-    
-# # pylint: disable=E1101
-# class JustView(APIView):
-#     def get(self, request):
-#         return Response("just")
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.db.models import Q
+from .serializers import *
+from .models import *
+# from .utils import update_reservation,
+#                    get_reservation,
+#                    deleteReservation,
+#                    get_reservations_list,
+#                    create_reservation
 
 # pylint: disable=E1101
 @api_view(['GET'])
-def getRoutes(request):
-
-    routes = [
-        {
-            'Endpoint': '/notes/',
-            'method': 'GET',
-            'body': None,
-            'description': 'Returns an array of notes'
-        },
-        {
-            'Endpoint': '/notes/id',
-            'method': 'GET',
-            'body': None,
-            'description': 'Returns a single note object'
-        },
-        {
-            'Endpoint': '/notes/create/',
-            'method': 'POST',
-            'body': {'body': ""},
-            'description': 'Creates new note with data sent in post request'
-        },
-        {
-            'Endpoint': '/notes/id/update/',
-            'method': 'PUT',
-            'body': {'body': ""},
-            'description': 'Creates an existing note with data sent in post request'
-        },
-        {
-            'Endpoint': '/notes/id/delete/',
-            'method': 'DELETE',
-            'body': None,
-            'description': 'Deletes and exiting note'
-        },
-    ]
-    return Response(routes)
-
-
-# /notes GET
-# /notes POST
-# /notes/<id> GET
-# /notes/<id> PUT
-# /notes/<id> DELETE
-
-# pylint: disable=E1101
-@api_view(['GET'])
-def getReservationsList(request):
+def get_reservations_list(request):
+    """
+    Get all reservations
+    """
     reservations = Reservation.objects.all()
     serializer = ReservationSerializer(reservations, many=True)
     return Response(serializer.data)
 
 # pylint: disable=E1101
 @api_view(['GET'])
-def getReservationDetail(request, pk):
+def get_reservation(request, pk):
+    """
+    Get a single reservations
+    """
     reservations = Reservation.objects.get(reservation_id=pk)
     serializer = ReservationSerializer(reservations, many=False)
     return Response(serializer.data)
 
 @api_view(['POST'])
-def createReservation(request):
+def create_reservation(request):
+    """
+    Create a reservations
+    """
     data = request.data
     reservation = Reservation.objects.create(
         reservation_id = data['reservation_id']
@@ -89,7 +45,10 @@ def createReservation(request):
 
 
 @api_view(['PUT'])
-def updateReservation(request, pk):
+def update_reservation(request, pk):
+    """
+    Update a reservations
+    """
     data = request.data
     reservation = Reservation.objects.get(reservation_id=pk)
     serializer = ReservationSerializer(instance=reservation, data=data)
@@ -100,23 +59,59 @@ def updateReservation(request, pk):
     return Response(serializer.data)
 
 # @api_view(['GET', 'POST'])
-# def getReservationsList(request):
+# def get_reservations_list(request):
 
 #     if request.method == 'GET':
-#         return getReservationsList(request)
+#         return get_reservations_list(request)
 
 #     if request.method == 'POST':
-#         return createReservation(request)
+#         return create_reservation(request)
 
 
 # @api_view(['GET', 'PUT', 'DELETE'])
-# def getReservationsList(request, pk):
+# def get_reservations_list(request, pk):
 
 #     if request.method == 'GET':
-#         return getReservationDetail(request, pk)
+#         return get_reservation(request, pk)
 
 #     if request.method == 'PUT':
-#         return updateReservation(request, pk)
+#         return update_reservation(request, pk)
 
 #     if request.method == 'DELETE':
 #         return deleteReservation(request, pk)
+
+@csrf_exempt
+def search_rooms(request):
+    """
+    Gets room search parametersfrom frontend and query to find the available rooms.
+    Then return available rooms.
+    """
+    check_in = request.data.get('checkIn')
+    check_out = request.data.get('checkOut')
+    adults = request.data.get('adults')
+    children = request.data.get('children')
+
+    if not all([check_in, check_out, adults, children]):
+        return JsonResponse({'error': 'Missing required parameters'})
+
+    # Query available rooms based on user inputs and reservations
+    reservations = Reservation.objects.filter(
+        Q(check_in__lte=check_in, check_out__gt=check_in) |
+        Q(check_in__lt=check_out, check_out__gte=check_out) |
+        Q(check_in__gte=check_in, check_out__lte=check_out)
+    )
+
+    reserved_room_ids = reservations.values_list('room_id', flat=True)
+
+    available_rooms = Room.objects.exclude(id__in=reserved_room_ids)
+
+    # Serialize room objects into JSON
+    room_data = []
+    for room in available_rooms:
+        room_data.append({
+            'room_id': room.room_id,
+            'room_name': room.room_name,
+            'room_price': room.room_price,
+        })
+
+    return JsonResponse({'rooms': room_data})

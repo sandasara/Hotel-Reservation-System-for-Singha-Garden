@@ -12,6 +12,7 @@ import Contact from './pages/Contact';
 import Book from './pages/Book';
 import ReservationList from './pages/ReservationList';
 import GetSingleReservation from './components/GetSingleReservation';
+import AvailableRooms from './pages/AvailableRooms';
 
 const router = createBrowserRouter([
   { path: "/", element: <App />, },
@@ -27,6 +28,8 @@ const router = createBrowserRouter([
   { path: "/reservations", element: <ReservationList />, },
 
   { path: "/reservations/:id", element: <GetSingleReservation />, },
+
+  { path: "/rooms/available", element: <AvailableRooms />, },
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
