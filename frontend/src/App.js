@@ -22,7 +22,7 @@ function App() {
         <Route path='/rooms' element={<RoomsPage setAvailableRoomsRoom={setAvailableRooms} />} />
         <Route path='/about' element={<About />} />
         <Route path='/contact' element={<Contact />} />
-        <Route path='/book' element={<Book />} />
+        <Route path='/room/:roomId' element={<Book availableRooms={availableRooms}/>} />
         <Route path='/reservations' element={<ReservationList />} />
         <Route path='/reservations/:id' element={<GetSingleReservation />} />
         <Route path='/rooms/available' element={<AvailableRooms availableRooms={availableRooms}/>} />

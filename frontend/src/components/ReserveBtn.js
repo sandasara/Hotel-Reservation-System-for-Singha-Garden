@@ -1,19 +1,19 @@
 import React from 'react'
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
-const ReserveBtn = (selectedRoom) => {
+const ReserveBtn = () => {
 
-    let navigate = useNavigate(); 
+    // let navigate = useNavigate(); 
 
-    const gotoBook = () =>{ 
-        let path = `/book`; 
-        navigate(path);
-    }
+    // const gotoBook = () =>{ 
 
-    console.log(selectedRoom)
+    //     let path = `/book`; 
+    //     navigate(path);
+    // }
+
   return (
     <div>
-        <button onClick={gotoBook}>Reserve</button>
+        <button>Reserve</button>
     </div>
   )
 }

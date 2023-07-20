@@ -1,8 +1,9 @@
 import React from 'react'
 import Navbar from '../components/Navbar';
 import ReserveBtn from '../components/ReserveBtn';
+import { Link } from 'react-router-dom';
 
-const AvailableRooms = ({ availableRooms, selectedRoom }) => {
+const AvailableRooms = ({ availableRooms }) => {
   if (!availableRooms || availableRooms.length === 0) {
     return (
       <div>
@@ -25,7 +26,7 @@ const AvailableRooms = ({ availableRooms, selectedRoom }) => {
                 <div>
                 <p>{room.description}</p>
                 </div>
-                <ReserveBtn />
+                <Link to={`/room/${room.room_id}`}><ReserveBtn/></Link>
               </div>
             ))}
           </div>
