@@ -3,7 +3,7 @@ import hero_video from '../assets/hero_video.mp4';
 import { AiOutlineSearch } from 'react-icons/ai';
 import Searchbar from './Searchbar';
 
-const Hero = () => {
+const Hero = (props) => {
   return (
     <div>
       <div className='w-full h-screen relative'>
@@ -20,9 +20,9 @@ const Hero = () => {
 
       <div className='absolute top-0 w-full h-full flex flex-col justify-center text-center text-white p-4'>
         <h1>First Class Travel</h1>
-        <h2 className='py-4'>Top 1% Locations Worldwide</h2>
+        <h2 className='py-4'>Top 1% Resort in Anuradhapura</h2>
 
-        <Searchbar />
+        <Searchbar setAvailableRoomsHome={props.setAvailableRoomsHome}/>
 
         {/* <form
           className='flex justify-between items-center max-w-[920px] mx-auto w-100% border p-1

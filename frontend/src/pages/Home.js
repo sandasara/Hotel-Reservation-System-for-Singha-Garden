@@ -6,11 +6,11 @@ import Footer from '../components/Footer';
 import Rooms from '../components/Rooms';
 import Search from '../components/Search';
 
-function Home() {
+function Home(props) {
   return (
     <div>
       <HomeNavbar />
-      <Hero />
+      <Hero setAvailableRoomsHome={props.setAvailableRoomsHome} />
       <Rooms />
       <Search />
       <Footer />

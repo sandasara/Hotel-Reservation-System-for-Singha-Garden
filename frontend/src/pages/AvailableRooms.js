@@ -1,29 +1,37 @@
 import React from 'react'
 import Navbar from '../components/Navbar';
+import ReserveBtn from '../components/ReserveBtn';
 
-const AvailableRooms = ({ availableRooms }) => {
+const AvailableRooms = ({ availableRooms, selectedRoom }) => {
   if (!availableRooms || availableRooms.length === 0) {
     return (
       <div>
         <Navbar />
-        <div>
-          No available rooms
-        </div>
+        Sorry, All our rooms are booked.
       </div>
-      )
+    ) 
   }
   else {
-  return (
-    <div>
-      <Navbar />
-      {availableRooms.map((room) => (
-        <div key={room.room_id}>
-          <span>{room.room_name}</span>
-          <span>{room.room_price}</span>
-        </div>
-      ))}
-    </div>
-  )}
-}
+    return ( 
+      <div>
+        <Navbar />
+        <section className="my-8 md:px-16 xl:px-24">
+          <h3>We have these rooms ready for you</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 my-8">
+            {availableRooms.map(room => (
+              <div key={room.room_id}>
+                <h2>{room.room_name}</h2>
+                <h3>Price: ${room.room_price}</h3>
+                <div>
+                <p>{room.description}</p>
+                </div>
+                <ReserveBtn />
+              </div>
+            ))}
+          </div>
+        </section>
+      </div>
+    )}
+  }
 
 export default AvailableRooms

@@ -109,6 +109,8 @@ def search_rooms(request):
 
             available_rooms = Room.objects.exclude(room_id__in=reserved_room_ids)
 
+            amenities = RoomAmenity.objects.filter(room_id__in=reserved_room_ids)
+
             # Serialize room objects into JSON
             room_data = []
             for room in available_rooms:
@@ -116,6 +118,7 @@ def search_rooms(request):
                     'room_id': room.room_id,
                     'room_name': room.room_name,
                     'room_price': room.room_price,
+                    'description': room.description,
                 })
         except json.JSONDecodeError:
             return JsonResponse({'error': 'Invalid JSON data'})

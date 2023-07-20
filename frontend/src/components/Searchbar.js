@@ -2,54 +2,63 @@ import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { useFormik} from 'formik';
 import axios from 'axios';
-import AvailableRooms from '../pages/AvailableRooms';
 
 const validate = values => {
     const errors = {};
     if (!values.checkIn) {
       errors.checkIn = 'Required';
-    // } else if (values.checkIn.length > 15) {
-    //   errors.checkIn = 'Must be 15 characters or less';
     }
   
     if (!values.checkOut) {
       errors.checkOut = 'Required';
-    // } else if (values.checkOut.length > 20) {
-    //   errors.checkOut = 'Must be 20 characters or less';
     }
   
     if (!values.adults) {
       errors.adults = 'Required';
-    // } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.adults)) {
-    //   errors.adults = 'Invalid adults address';
+    } else if (values.adults < 0) {
+        errors.adults = 'Cannot be a negative value';
     }
 
     if (!values.children) {
         errors.children = 'Required';
-    // } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.adults)) {
-    //     errors.adults = 'Invalid adults address';
+    } else if (values.children < 0) {
+        errors.children = 'Cannot be a negative value';
+    }
+
+    if (values.checkIn && values.checkOut) {
+        const checkInDate = new Date(values.checkIn);
+        const checkOutDate = new Date(values.checkOut);
+    
+        if (checkOutDate < checkInDate) {
+          errors.checkOut = 'Check-out date cannot be earlier than check-in date';
+        }
+    
+        const currentDate = new Date();
+    
+        if (checkInDate < currentDate) {
+          errors.checkIn = 'Cannot select a past date';
+        }
     }
   
     return errors;
   };
 
-  const onSubmit = async (values) => {
-    console.log(values)
-    try{
-        const response = await axios.post('http://127.0.0.1:8000/api/rooms/available_rooms/', values)
-        console.log(response.data)
-        const { rooms} = response.data
-        console.log(rooms)
-        // setAvailableRooms(rooms)
-        // navigate('/rooms/available')
-    } catch (error) {
-        console.log(error);
-    }     
-  };
+const Searchbar = (props) => {
 
-const Searchbar = () => {
+    const navigate = useNavigate();
 
-    const [availableRooms, setAvailableRooms] = useState([]);
+    const onSubmit = async (values) => {
+
+        try {
+            const response = await axios.post('http://127.0.0.1:8000/api/rooms/available_rooms/', values);
+            {props.setAvailableRoomsHome(response.data.rooms)};
+            navigate('/rooms/available');
+    
+        } catch (error) {
+            console.log(error);
+        }     
+      };
+
     const formik = useFormik({
         initialValues: {
             checkIn: '',
@@ -61,19 +70,6 @@ const Searchbar = () => {
         onSubmit,
     })
 
-    //     // try {
-    //     // const response = await axios.post('http://127.0.0.1:8000/api/rooms/available_rooms/', formData);
-    //     // console.log(response.data)
-    //     // // Extract the available rooms from the response
-    //     // const { rooms } = response.data;
-    //     // setAvailableRooms(rooms);
-    //     // navigate('/rooms/available');
-    //     // } catch (error) {
-    //     // // Handle error
-    //     // }
-    // };
-
-
     return (
         <div>
             <form className='flex justify-between items-center max-w-[640px] mx-auto w-100% border p-2
@@ -82,7 +78,7 @@ const Searchbar = () => {
                     <div className='flex flex-col mr-2'>
                         <label htmlFor='checkIn'>Check-In</label>
                         <input 
-                            className='border rounded-md p-2' 
+                            className='border rounded-md p-2 ' 
                             type="date" 
                             id='checkIn' 
                             name='checkIn' 
@@ -125,7 +121,7 @@ const Searchbar = () => {
                         {formik.errors.children ? <div>{formik.errors.children}</div> : null}
                     </div>
                     <div>            
-                        <button className='mr-4 my-4 b-4' type='submit'>Search</button>
+                        <button className='mr-4 my-4 b-4 text-zinc-950' type='submit'>Search</button>
                     </div>
                 </div>
             </form>
