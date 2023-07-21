@@ -13,6 +13,7 @@ import json
 #                    create_reservation
 
 # pylint: disable=E1101
+
 @api_view(['GET'])
 def get_reservations_list(request):
     """
@@ -80,6 +81,18 @@ def update_reservation(request, pk):
 
 #     if request.method == 'DELETE':
 #         return deleteReservation(request, pk)
+
+@api_view(['POST'])
+def create_customer(request):
+    """
+    Create a customer
+    """
+    serializer = CustomerSerializer(data=request.data)
+
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status=201)
+    return Response(serializer.errors, status=400)
 
 @csrf_exempt
 def search_rooms(request):

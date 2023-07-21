@@ -7,5 +7,6 @@ urlpatterns = [
     path('reservations/create/', views.create_reservation, name="create-reservation"),
     path('reservations/<str:pk>/update/', views.update_reservation, name='update-reservation'),
     path('rooms/available_rooms/', views.search_rooms, name='search_rooms'),
+    path('create_customer/', views.create_customer, name='create_customer'),
     # path('api/', include(router.urls)),
 ]

@@ -7,7 +7,7 @@ class RoomAdmin(admin.ModelAdmin):
     list_display = ['room_id', 'room_name', 'room_price', 'description']
 
 class CustomerAdmin(admin.ModelAdmin):
-    list_display = ['customer_id', 'first_name', 'last_name', 'email', 'phone', 'street', 'city', 'country', 'zip_code']
+    list_display = ['customer_id', 'first_name', 'last_name', 'email', 'phone', 'address', 'city', 'country', 'zip_code']
 
 class ReservationAdmin(admin.ModelAdmin):
     list_display = ['reservation_id', 'room', 'customer', 'check_in', 'check_out', 'adults', 'children', 'Updated_on', 'Reserved_on']

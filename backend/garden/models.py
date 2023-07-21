@@ -18,13 +18,14 @@ class Customer(models.Model):
                                    primary_key=True,
                                    serialize=False,
                                    verbose_name='Customer ID')
-    first_name = models.CharField(max_length=20)
-    last_name = models.CharField(max_length=20)
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
     email = models.EmailField(max_length=254)
     phone = models.CharField(max_length=12)
-    street = models.CharField(max_length=50)
-    city = models.CharField(max_length=20)
-    country = models.CharField(max_length=20)
+    address = models.CharField(max_length=100)
+    city = models.CharField(max_length=100)
+    state = models.CharField(max_length=100)
+    country = models.CharField(max_length=100)
     zip_code = models.CharField(max_length=20)
 
     def __str__(self):

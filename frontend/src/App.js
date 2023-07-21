@@ -14,15 +14,16 @@ import NoRoute from './components/NoRoute';
 function App() {
 
   const [availableRooms, setAvailableRooms] = useState([]);
+  const [searchedParams, setSearchedParams] = useState([]);
 
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={<Home setAvailableRoomsHome={setAvailableRooms} />} />
-        <Route path='/rooms' element={<RoomsPage setAvailableRoomsRoom={setAvailableRooms} />} />
+        <Route path='/' element={<Home setAvailableRoomsHome={setAvailableRooms} setSearchedParams={setSearchedParams}/>} />
+        <Route path='/rooms' element={<RoomsPage setAvailableRoomsRoom={setAvailableRooms} setSearchedParams={setSearchedParams} />} />
         <Route path='/about' element={<About />} />
         <Route path='/contact' element={<Contact />} />
-        <Route path='/room/:roomId' element={<Book availableRooms={availableRooms}/>} />
+        <Route path='/room/:roomId' element={<Book availableRooms={availableRooms} searchedParams={searchedParams}/>} />
         <Route path='/reservations' element={<ReservationList />} />
         <Route path='/reservations/:id' element={<GetSingleReservation />} />
         <Route path='/rooms/available' element={<AvailableRooms availableRooms={availableRooms}/>} />
