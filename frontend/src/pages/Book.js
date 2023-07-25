@@ -8,9 +8,6 @@ function Book({ availableRooms, searchedParams }) {
   const { roomId } = useParams();
 
   const selectedRoom = availableRooms.find(room => room.room_id === parseInt(roomId));
-  const Params = searchedParams;
-
-  console.log(Params)
 
   if (!selectedRoom) {
     return (
@@ -27,7 +24,7 @@ function Book({ availableRooms, searchedParams }) {
     <div>
       <div>
         <Navbar />
-        <MakeReservationForm />
+        <MakeReservationForm selectedRoom={selectedRoom} searchedParams={searchedParams} />
         <SelectedRoom />
       </div>
       <div>

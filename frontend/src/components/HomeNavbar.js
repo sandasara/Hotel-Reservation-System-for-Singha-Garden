@@ -36,7 +36,7 @@ const HomeNavbar = () => {
       </ul>
       <div className='hidden md:flex'>
         <BiSearch className='' size={20} />
-        <BsPerson size={20} />
+        <Link to='/adminpanel'><BsPerson size={20} /></Link>
       </div>
 
       {/* Hamburger */}

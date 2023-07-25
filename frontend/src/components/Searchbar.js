@@ -54,6 +54,7 @@ const Searchbar = (props) => {
             { props.setAvailableRoomsHome(response.data.rooms) };
             { props.setSearchedParams(values) };
             navigate('/rooms/available');
+
     
         } catch (error) {
             console.log(error);
@@ -86,7 +87,7 @@ const Searchbar = (props) => {
                             onChange={formik.handleChange}
                             value={formik.values.checkIn}
                         />
-                        {formik.errors.checkIn ? <div>{formik.errors.checkIn}</div> : null}
+                        {formik.errors.checkIn ? <div className='input-error'>{formik.errors.checkIn}</div> : null}
                     </div>
                     <div className='flex flex-col mr-2'>
                         <label htmlFor='checkOut'>Check-Out</label>
@@ -97,7 +98,7 @@ const Searchbar = (props) => {
                         onChange={formik.handleChange}
                         value={formik.values.checkOut}
                         />
-                        {formik.errors.checkOut ? <div>{formik.errors.checkOut}</div> : null}
+                        {formik.errors.checkOut ? <div className='input-error'>{formik.errors.checkOut}</div> : null}
                     </div>
                     <div className='flex flex-col mr-2'>
                         <label htmlFor='adults'>Adults</label>
@@ -108,7 +109,7 @@ const Searchbar = (props) => {
                         onChange={formik.handleChange}
                         value={formik.values.adults}
                         />
-                        {formik.errors.adults ? <div>{formik.errors.adults}</div> : null}
+                        {formik.errors.adults ? <div className='input-error'>{formik.errors.adults}</div> : null}
                     </div>
                     <div className='flex flex-col mr-2'>
                         <label htmlFor='children'>Children</label>
@@ -119,7 +120,7 @@ const Searchbar = (props) => {
                         onChange={formik.handleChange}
                         value={formik.values.children}
                         />
-                        {formik.errors.children ? <div>{formik.errors.children}</div> : null}
+                        {formik.errors.children ? <div className='input-error'>{formik.errors.children}</div> : null}
                     </div>
                     <div>            
                         <button className='mr-4 my-4 b-4 text-zinc-950' type='submit'>Search</button>

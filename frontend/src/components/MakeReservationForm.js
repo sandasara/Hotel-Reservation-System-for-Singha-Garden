@@ -1,12 +1,14 @@
 import React from 'react'
 import { useFormik} from 'formik';
 import axios from 'axios';
+import { makeReservationSchema } from '../validationschemas/MakeReservationSchema';
+import '../css/form.css'
 
-function MakeReservationForm() {
+function MakeReservationForm({ selectedRoom, searchedParams }) {
 
   const onSubmit = async (values) => {
     try {
-      const mappedData = {
+      const mappedCustomerData = {
         first_name: values.firstName,
         last_name: values.lastName,
         email: values.email,
@@ -16,16 +18,28 @@ function MakeReservationForm() {
         city: values.city,
         state: values.state,
         country: values.country,
-        // Add other field mappings here if needed
       };
-      console.log(mappedData)
-
-      const response = await axios.post('http://127.0.0.1:8000/api/create_customer/', mappedData);
-    
-      const customerData = response.data;
-
-      console.log('Customer record created:', customerData);
       
+
+      // const response = await axios.post('http://127.0.0.1:8000/api/create_customer/', mappedCustomerData);
+    
+      // const customerData = response.data;
+
+      // console.log('Customer record created:', customerData.data.customer_id);
+
+      const mappedReservationData = {
+        room: selectedRoom.room_id,
+        // customer: customerData.customer_id,
+        check_in: searchedParams.checkIn,
+        check_out: searchedParams.checkOut,
+        adults: searchedParams.adults,
+        children: searchedParams.children,
+        special_info: values.specialinfo,
+        pay_method: values.payMethod,
+      }
+      
+      console.log(mappedReservationData)
+
     } catch (error) {
         console.log(error);
     }
@@ -42,8 +56,14 @@ function MakeReservationForm() {
         city: '',
         state: '',
         country: '',
+        cardno: '',
+        expmonth: '',
+        nameoncard: '',
+        cvv: '',
+        specialinfo: '',
+        payMethod: '',
     },
-    // validate,
+    // validationSchema: makeReservationSchema,
     onSubmit,
 })
 
@@ -68,6 +88,7 @@ function MakeReservationForm() {
                                 onChange={formik.handleChange}
                                 value={formik.values.firstName}
                                 />
+                                {formik.errors.firstName && formik.touched.firstName && (<p className='input-error'>{formik.errors.firstName}</p>)}
                         </div>
                         <div>
                         <label>Last name</label>
@@ -80,6 +101,7 @@ function MakeReservationForm() {
                               onChange={formik.handleChange}
                               value={formik.values.lastName}
                               />
+                              {formik.errors.lastName && formik.touched.lastName && (<p className='input-error'>{formik.errors.lastName}</p>)}
                         </div>
                         <div>
                         <label>Email</label>
@@ -92,6 +114,7 @@ function MakeReservationForm() {
                               onChange={formik.handleChange}
                               value={formik.values.email}
                               />
+                              {formik.errors.email && formik.touched.email && (<p className='input-error'>{formik.errors.email}</p>)}
                         </div>
                         <div>
                         <label>Phone</label>
@@ -104,6 +127,7 @@ function MakeReservationForm() {
                               onChange={formik.handleChange}
                               value={formik.values.tel}
                               />
+                              {formik.errors.tel && formik.touched.tel && (<p className='input-error'>{formik.errors.tel}</p>)}
                         </div>
                       </div>
                       <div className='mt-8 mb-8'>
@@ -117,6 +141,7 @@ function MakeReservationForm() {
                               onChange={formik.handleChange}
                               value={formik.values.address}
                               />
+                              {formik.errors.address && formik.touched.address && (<p className='input-error'>{formik.errors.address}</p>)}
                       </div>
                       <div className="grid grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-2">
                         <div>
@@ -130,6 +155,7 @@ function MakeReservationForm() {
                                 onChange={formik.handleChange}
                                 value={formik.values.zip}
                                 />
+                                {formik.errors.zip && formik.touched.zip && (<p className='input-error'>{formik.errors.zip}</p>)}
                         </div>
                         <div>
                         <label>City</label>
@@ -142,6 +168,7 @@ function MakeReservationForm() {
                               onChange={formik.handleChange}
                               value={formik.values.city}
                               />
+                              {formik.errors.city && formik.touched.city && (<p className='input-error'>{formik.errors.city}</p>)}
                         </div>
                         <div>
                         <label>State</label>
@@ -154,6 +181,7 @@ function MakeReservationForm() {
                               onChange={formik.handleChange}
                               value={formik.values.state}
                               />
+                              {formik.errors.state && formik.touched.state && (<p className='input-error'>{formik.errors.state}</p>)}
                         </div>
                         <div>
                           <label>Country</label>
@@ -413,6 +441,7 @@ function MakeReservationForm() {
                               <option value="ZM">Zambia</option>
                               <option value="ZW">Zimbabwe</option>
                             </select>
+                            {formik.errors.Country && formik.touched.Country && (<p className='input-error'>{formik.errors.Country}</p>)}
                         </div>
                       </div>
                     <div className='mt-20'>
@@ -423,30 +452,42 @@ function MakeReservationForm() {
                         <div>
                           <label>Card no.</label>
                             <input 
-                                type="number" 
+                                type="text" 
                                 name="cardno" 
                                 id="cardno"  
                                 autoComplete="given-name" 
-                                className="flex w-full rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                                className="flex w-full rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" 
+                                onChange={formik.handleChange}
+                                value={formik.values.cardno}
+                                />
+                            {formik.errors.cardno && formik.touched.cardno && (<p className='input-error'>{formik.errors.cardno}</p>)}
                         </div>
                         <div className='grid grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-2'>
                           <div>
                             <label>Month</label>
                               <input 
-                                  type="number" 
+                                  type="text" 
                                   name="expmonth" 
                                   id="expmonth"  
                                   autoComplete="given-name" 
-                                  className="flex w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />    
+                                  className="flex w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" 
+                                  onChange={formik.handleChange}
+                                  value={formik.values.expmonth}
+                                  /> 
+                                  {formik.errors.expmonth && formik.touched.expmonth && (<p className='input-error'>{formik.errors.expmonth}</p>)}   
                           </div>
                           <div>
                             <label>Year</label>
                               <input 
-                                  type="nmber" 
+                                  type="text" 
                                   name="expyear" 
                                   id="expyear"  
                                   autoComplete="given-name" 
-                                  className="flex w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />    
+                                  className="flex w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" 
+                                  onChange={formik.handleChange}
+                                  value={formik.values.expyear}
+                                  />  
+                                  {formik.errors.expyear && formik.touched.expyear && (<p className='input-error'>{formik.errors.expyear}</p>)}     
                           </div>
                         </div>
                       </div>
@@ -454,21 +495,29 @@ function MakeReservationForm() {
                         <div>
                             <label>Name on card</label>
                               <input 
-                                  type="number" 
-                                  name="cardno" 
-                                  id="cardno"  
+                                  type="text" 
+                                  name="nameoncard" 
+                                  id="nameoncard"  
                                   autoComplete="given-name" 
-                                  className="flex w-full rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                                  className="flex w-full rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" 
+                                  onChange={formik.handleChange}
+                                  value={formik.values.nameoncard}
+                                  />
+                                  {formik.errors.nameoncard && formik.touched.nameoncard && (<p className='input-error'>{formik.errors.nameoncard}</p>)}     
                         </div>
                         <div className='grid grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-2'>
                           <div>
                             <label>cvv</label>
                               <input 
-                                  type="number" 
+                                  type="text" 
                                   name="cvv" 
                                   id="cvv"  
                                   autoComplete="given-name" 
-                                  className="flex w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />    
+                                  className="flex w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" 
+                                  onChange={formik.handleChange}
+                                  value={formik.values.cvv}
+                                  /> 
+                                  {formik.errors.cvv && formik.touched.cvv && (<p className='input-error'>{formik.errors.cvv}</p>)}     
                           </div>
                         </div>
                         </div>           
@@ -479,13 +528,44 @@ function MakeReservationForm() {
                   </div>
                     <div>
                       <div>
-                        <textarea className="flex w-full mt-4 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">   
+                        <textarea id='specialinfo' name='specialinfo' className="flex w-full mt-4 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"> 
+                        onChange={formik.handleChange}
+                        value={formik.values.specialinfo}
                         </textarea>
+                        {formik.errors.specialinfo && formik.touched.specialinfo && (<p className='input-error'>{formik.errors.specialinfo}</p>)}
                       </div>
                     </div>
                   </div>
+                  <div className='mt-10'>
+                    <div>
+                      <label>
+                      <input
+                        type='radio'
+                        name='payMethod'
+                        id='payonsite'
+                        //className="rounded-l-md border-gray-300 placeholder-gray-400 focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full min-w-0 sm:text-sm border"
+                        onChange={formik.handleChange}
+                        value={formik.values.payMethod}
+                        
+                     />
+                      Pay on-site</label>
+                      <br></br>
+                      <label>
+                      <input
+                        type='radio'
+                        name='payMethod'
+                        id='payonline'
+                        //className="rounded-none border-gray-300 bg-white text-indigo-600 focus:ring-indigo-500 h-4 w-4 flex items-center justify-center"
+                        onChange={formik.handleChange}
+                        value={formik.values.payMethod}
+                      />
+                      Pay online</label>
+                      {formik.errors.payMethod && formik.touched.payMethod && (<p className='input-error'>{formik.errors.payMethod}</p>)}     
+                    </div>
+                  </div>
                   <div>            
-                   <button className='mr-4 my-4 b-4 text-zinc-950' type='submit'>Confirm</button>
+                   <button className='mr-4 my-4 b-4 text-zinc-950' type='submit'>Confirm without paying</button>
+                   <button className='mr-4 my-4 b-4 text-zinc-950' type='submit'>Go to payment</button>
                    </div>
                   </form>
                 </div>
@@ -494,6 +574,5 @@ function MakeReservationForm() {
     </div>
   )
 }
-
 
 export default MakeReservationForm

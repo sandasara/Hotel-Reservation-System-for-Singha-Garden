@@ -10,6 +10,8 @@ import ReservationList from './pages/ReservationList';
 import GetSingleReservation from './components/GetSingleReservation';
 import AvailableRooms from './pages/AvailableRooms';
 import NoRoute from './components/NoRoute';
+import CustomerRegistration from './pages/CustomerRegistration';
+import AdminPanel from './components/AdminPanel';
 
 function App() {
 
@@ -19,6 +21,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path='*' element={<NoRoute />} />
         <Route path='/' element={<Home setAvailableRoomsHome={setAvailableRooms} setSearchedParams={setSearchedParams}/>} />
         <Route path='/rooms' element={<RoomsPage setAvailableRoomsRoom={setAvailableRooms} setSearchedParams={setSearchedParams} />} />
         <Route path='/about' element={<About />} />
@@ -27,7 +30,8 @@ function App() {
         <Route path='/reservations' element={<ReservationList />} />
         <Route path='/reservations/:id' element={<GetSingleReservation />} />
         <Route path='/rooms/available' element={<AvailableRooms availableRooms={availableRooms}/>} />
-        <Route path='*' element={<NoRoute />} />
+        <Route path='/adminpanel' element={<AdminPanel />} />
+        <Route path='/register' element={<CustomerRegistration />} />
       </Routes>
     </BrowserRouter>
   );

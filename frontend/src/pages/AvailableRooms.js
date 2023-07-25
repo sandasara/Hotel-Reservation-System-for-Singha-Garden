@@ -24,7 +24,8 @@ const AvailableRooms = ({ availableRooms }) => {
                 <h2>{room.room_name}</h2>
                 <h3>Price: ${room.room_price}</h3>
                 <div>
-                <p>{room.description}</p>
+                  <p>{room.amenities}</p>
+                  <p>{room.description}</p>
                 </div>
                 <Link to={`/room/${room.room_id}`}><ReserveBtn/></Link>
               </div>
