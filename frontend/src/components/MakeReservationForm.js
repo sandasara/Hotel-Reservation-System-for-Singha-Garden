@@ -3,6 +3,7 @@ import { useFormik} from 'formik';
 import axios from 'axios';
 import { makeReservationSchema } from '../validationschemas/MakeReservationSchema';
 import '../css/form.css'
+import { Link } from 'react-router-dom';
 
 function MakeReservationForm({ selectedRoom, searchedParams }) {
 
@@ -18,27 +19,28 @@ function MakeReservationForm({ selectedRoom, searchedParams }) {
         city: values.city,
         state: values.state,
         country: values.country,
-      };
-      
+      }; 
 
-      // const response = await axios.post('http://127.0.0.1:8000/api/create_customer/', mappedCustomerData);
-    
-      // const customerData = response.data;
-
-      // console.log('Customer record created:', customerData.data.customer_id);
+      const customerResponse = await axios.post('http://127.0.0.1:8000/api/create_customer/', mappedCustomerData);    
+      const customerData = customerResponse.data;
+      console.log('Customer record created:', customerData.customer_id);
 
       const mappedReservationData = {
         room: selectedRoom.room_id,
-        // customer: customerData.customer_id,
+        customer: customerData.customer_id,
         check_in: searchedParams.checkIn,
         check_out: searchedParams.checkOut,
         adults: searchedParams.adults,
         children: searchedParams.children,
         special_info: values.specialinfo,
-        pay_method: values.payMethod,
+        payment_method: values.payMethod,
       }
       
       console.log(mappedReservationData)
+
+      const reservationResponse = await axios.post('http://127.0.0.1:8000/api/reservations/create/', mappedReservationData);
+      const reservationData = reservationResponse.data;
+      console.log('Reservation record created:', reservationData.reservation_id);
 
     } catch (error) {
         console.log(error);
@@ -528,10 +530,10 @@ function MakeReservationForm({ selectedRoom, searchedParams }) {
                   </div>
                     <div>
                       <div>
-                        <textarea id='specialinfo' name='specialinfo' className="flex w-full mt-4 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"> 
+                        <textarea id='specialinfo' name='specialinfo' className="flex w-full mt-4 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         onChange={formik.handleChange}
                         value={formik.values.specialinfo}
-                        </textarea>
+                        />
                         {formik.errors.specialinfo && formik.touched.specialinfo && (<p className='input-error'>{formik.errors.specialinfo}</p>)}
                       </div>
                     </div>
@@ -542,11 +544,11 @@ function MakeReservationForm({ selectedRoom, searchedParams }) {
                       <input
                         type='radio'
                         name='payMethod'
-                        id='payonsite'
+                        id='payOnsite'
+                        value='payOnSite'
                         //className="rounded-l-md border-gray-300 placeholder-gray-400 focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full min-w-0 sm:text-sm border"
                         onChange={formik.handleChange}
-                        value={formik.values.payMethod}
-                        
+                        checked={formik.values.payMethod === 'payOnSite'}                   
                      />
                       Pay on-site</label>
                       <br></br>
@@ -554,19 +556,36 @@ function MakeReservationForm({ selectedRoom, searchedParams }) {
                       <input
                         type='radio'
                         name='payMethod'
-                        id='payonline'
+                        id='payOnline'
+                        value='payOnline'
                         //className="rounded-none border-gray-300 bg-white text-indigo-600 focus:ring-indigo-500 h-4 w-4 flex items-center justify-center"
                         onChange={formik.handleChange}
-                        value={formik.values.payMethod}
+                        checked={formik.values.payMethod === 'payOnline'}
                       />
                       Pay online</label>
                       {formik.errors.payMethod && formik.touched.payMethod && (<p className='input-error'>{formik.errors.payMethod}</p>)}     
                     </div>
                   </div>
                   <div>            
-                   <button className='mr-4 my-4 b-4 text-zinc-950' type='submit'>Confirm without paying</button>
-                   <button className='mr-4 my-4 b-4 text-zinc-950' type='submit'>Go to payment</button>
-                   </div>
+                   <button className='mr-4 my-4 b-4 text-zinc-950' 
+                      type='button' 
+                      name='confirm' 
+                      id='confirm'
+                      onClick={() => formik.handleSubmit()}
+                      disabled={formik.values.payMethod !== 'payOnSite'}>
+                      Confirm without paying
+                    </button>
+                   <Link to='/payment'>
+                   <button className='mr-4 my-4 b-4 text-zinc-950' 
+                      type='button' 
+                      name='gotopay' 
+                      id='gotopay' 
+                      onClick={() => formik.handleSubmit()}
+                      disabled={formik.values.payMethod !== 'payOnline'}>
+                        Go to payment
+                    </button>
+                  </Link>
+                  </div>
                   </form>
                 </div>
             </div>

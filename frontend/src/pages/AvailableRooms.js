@@ -22,7 +22,9 @@ const AvailableRooms = ({ availableRooms }) => {
             {availableRooms.map(room => (
               <div key={room.room_id}>
                 <h2>{room.room_name}</h2>
-                <h3>Price: ${room.room_price}</h3>
+                <h3>Total price: ${room.total_price}</h3>
+                <p>Nights: {room.number_of_days}</p>
+                <p>Price per day: ${room.room_price}</p>
                 <div>
                   <p>{room.amenities}</p>
                   <p>{room.description}</p>

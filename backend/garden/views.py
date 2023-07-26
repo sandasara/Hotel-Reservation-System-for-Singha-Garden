@@ -4,6 +4,7 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.db.models import Q
 from django.db.models import Prefetch
+from datetime import datetime
 from .serializers import *
 from .models import *
 import json
@@ -49,6 +50,9 @@ def search_rooms(request):
 
             if not all([check_in, check_out, adults, children]):
                 return JsonResponse({'error': 'Missing required parameters'})
+            
+            check_in_date = datetime.strptime(check_in, '%Y-%m-%d').date()
+            check_out_date = datetime.strptime(check_out, '%Y-%m-%d').date()
 
             # Query available rooms based on user inputs and reservations
             reservations = Reservation.objects.filter(
@@ -63,16 +67,21 @@ def search_rooms(request):
                 Prefetch('amenities', queryset=Amenities.objects.all(), to_attr='room_amenities')
             )
 
-            amenities = RoomAmenity.objects.filter(room_id__in=reserved_room_ids)
-
             # Serialize room objects into JSON
             room_data = []
             for room in available_rooms:
+
                 amenity_names = room.amenities.values_list('amenity_name', flat=True)
+                price_per_day = room.room_price
+                number_of_days = (check_out_date - check_in_date).days
+                total_price = price_per_day * number_of_days
+
                 room_data.append({
                     'room_id': room.room_id,
                     'room_name': room.room_name,
                     'room_price': room.room_price,
+                    'number_of_days': number_of_days,
+                    'total_price': total_price,
                     'description': room.description,
                     'amenities': list(amenity_names),
                 })

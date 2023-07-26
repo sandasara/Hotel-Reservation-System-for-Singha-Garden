@@ -12,6 +12,7 @@ import AvailableRooms from './pages/AvailableRooms';
 import NoRoute from './components/NoRoute';
 import CustomerRegistration from './pages/CustomerRegistration';
 import AdminPanel from './components/AdminPanel';
+import Payment from './pages/Payment';
 
 function App() {
 
@@ -30,6 +31,7 @@ function App() {
         <Route path='/reservations' element={<ReservationList />} />
         <Route path='/reservations/:id' element={<GetSingleReservation />} />
         <Route path='/rooms/available' element={<AvailableRooms availableRooms={availableRooms}/>} />
+        <Route path='/payment' element={<Payment />} />
         <Route path='/adminpanel' element={<AdminPanel />} />
         <Route path='/register' element={<CustomerRegistration />} />
       </Routes>
