@@ -72,7 +72,7 @@ function MakeReservationForm({ selectedRoom, searchedParams }) {
   return (
     <div className='mx-16 my-8'>
         <div className='container mx-auto'>
-            <div className='w-full lg:w-1/2 p-5 rounded-md border-2 border-neutral-950'>
+            <div className='w-full p-5 rounded-md border-2 border-neutral-950'>
                 <div>
                     <h3>Confirm your stay</h3>
                 </div>

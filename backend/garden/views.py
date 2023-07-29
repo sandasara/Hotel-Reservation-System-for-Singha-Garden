@@ -1,13 +1,28 @@
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
+from django.views.decorators.csrf import csrf_exempt
+from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
+
+from rest_framework import status
+from rest_framework import permissions
+from rest_framework.permissions import IsAuthenticated
+
+from rest_framework.authtoken.models import Token
+from django.contrib.auth import authenticate
+from rest_framework.permissions import IsAuthenticated
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from rest_framework_simplejwt.views import TokenObtainPairView
+
 from django.db.models import Q
 from django.db.models import Prefetch
+
 from datetime import datetime
 from .serializers import *
 from .models import *
 import json
+
+
 
 @api_view(['POST'])
 def create_reservation(request):
@@ -89,3 +104,120 @@ def search_rooms(request):
             return JsonResponse({'error': 'Invalid JSON data'})
 
     return JsonResponse({'rooms': room_data})
+
+
+
+# -------------------------------------------------------------------------------------------------------------------
+# Authentication and authorization
+
+
+
+# class UserRegistrationView(APIView):
+#     def post(self, request):
+#         serializer = CustomUserSerializer(data=request.data)
+#         if serializer.is_valid():
+#             user_type = serializer.validated_data.get('user_type')
+#             if user_type == 'manager':
+#                 if not request.user.is_superuser:
+#                     return Response({'error': 'Only superuser can create Manager users'}, status=status.HTTP_403_FORBIDDEN)
+#             elif user_type == 'receptionist':
+#                 # Add any specific checks for creating receptionist users
+#                 pass
+#             elif user_type == 'customer':
+#                 # Add any specific checks for creating customer users
+#                 pass
+
+#             user = serializer.save()
+#             token, _ = Token.objects.get_or_create(user=user)
+#             return Response({'token': token.key}, status=status.HTTP_201_CREATED)
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+# @api_view(['POST'])
+# def user_registration(request):
+#     serializer = UserRegistrationSerializer(data=request.data)
+#     if serializer.is_valid():
+#         serializer.save()
+#         return Response(serializer.data, status=status.HTTP_201_CREATED)
+#     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+# login view attempt 1
+# @api_view(['POST'])
+# def user_login(request):
+#     serializer = UserLoginSerializer(data=request.data)
+#     if serializer.is_valid():
+#         user = authenticate(
+#             email=serializer.validated_data['email'],
+#             password=serializer.validated_data['password']
+#         )
+#         if user:
+#             # Create or retrieve the token for the user
+#             token, _ = Token.objects.get_or_create(user=user)
+#             return Response({'token': token.key, 'user_type': user.user_type})
+#         else:
+#             return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
+#     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+# login view attempt 2
+# @api_view(['POST'])
+# def user_login(request):
+#     serializer = UserLoginSerializer(data=request.data)
+#     if serializer.is_valid():
+#         email = serializer.validated_data['email']
+#         password = serializer.validated_data['password']
+
+#         # Manually authenticate the user using CustomUserManager
+#         user = CustomUser.objects.authenticate_user(email=email, password=password)
+
+#         if user:
+#             # Create or retrieve the token for the user
+#             token, _ = Token.objects.get_or_create(user=user)
+#             return Response({'token': token.key, 'user_type': user.user_type})
+#         else:
+#             return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
+#     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+#login view atttempt 3
+# @api_view(['POST'])
+# def user_login(request):
+#     serializer = UserLoginSerializer(data=request.data)
+#     if serializer.is_valid():
+#         email = serializer.validated_data['email']
+#         password = serializer.validated_data['password']
+
+#         user = authenticate(email=email, password=password)
+
+#         if user:
+#             token, _ = Token.objects.get_or_create(user=user)
+#             return Response({'token': token.key, 'user_type': user.user_type})
+#         else:
+#             return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
+
+#     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
+    @classmethod
+    def get_token(cls, user):
+        token = super().get_token(user)
+
+        # Add custom claims
+        token['username'] = user.username
+        # ...
+
+        return token
+
+
+class MyTokenObtainPairView(TokenObtainPairView):
+    serializer_class = MyTokenObtainPairSerializer
+
+
+@api_view(['GET'])
+def getRoutes(request):
+    routes = [
+        '/api/token',
+        '/api/token/refresh',
+    ]
+
+    return Response(routes)

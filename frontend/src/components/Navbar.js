@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import AuthContext from '../context/AuthContext'
 import { Link } from 'react-router-dom';
 import { BsPerson } from 'react-icons/bs';
 import { BiSearch } from 'react-icons/bi';
@@ -21,6 +22,8 @@ const Navbar = () => {
         setLogo(!logo)
     };
 
+    let {user, logoutUser} = useContext(AuthContext)
+
   return (
     <div className='flex w-full justify-between items-center h-20 px-4 relative z-10 text-black'>
         <div>
@@ -31,11 +34,18 @@ const Navbar = () => {
             <li><Link to='/rooms'>Rooms</Link></li>
             <li><Link to='/about'>About Us</Link></li>
             <li><Link to='/contact'>Contact</Link></li>
-            <li><Link to='/book'>Book Now</Link></li>
+            <li><Link to='/rooms'>Book Now</Link></li>
 
       </ul>
       <div className='hidden md:flex'>
-        <BiSearch className='' size={20} />
+        {user ? (
+          <>
+          <p>Hi {user.username}  </p>
+          <button onClick={logoutUser}>Logout</button>
+          </>
+        ): (
+          <Link to="/login" >Login</Link>
+        )}
         <BsPerson size={20} />
       </div>
 

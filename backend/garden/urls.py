@@ -1,4 +1,8 @@
 from django.urls import path
+from rest_framework_simplejwt.views import (
+    TokenRefreshView,
+)
+from .views import MyTokenObtainPairView
 from garden import views
 
 urlpatterns = [
@@ -8,5 +12,10 @@ urlpatterns = [
     # path('reservations/<str:pk>/update/', views.update_reservation, name='update-reservation'),
     path('rooms/available_rooms/', views.search_rooms, name='search_rooms'),
     path('create_customer/', views.create_customer, name='create_customer'),
+    # path('register/', views.user_registration, name='user-registration'),
+    # path('login/', views.user_login, name='user-login'),
+    # path('login/', UserLoginView.as_view(), name='login'),
     # path('api/', include(router.urls)),
+    path('token/', MyTokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ]
