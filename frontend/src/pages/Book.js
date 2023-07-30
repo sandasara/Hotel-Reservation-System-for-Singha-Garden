@@ -2,7 +2,6 @@ import React from 'react'
 import { useParams } from 'react-router-dom';
 import Navbar from '../components/Navbar'
 import MakeReservationForm from '../components/MakeReservationForm'
-import SelectedRoom from '../components/SelectedRoom'
 
 function Book({ availableRooms, searchedParams }) {
   const { roomId } = useParams();
@@ -30,8 +29,10 @@ function Book({ availableRooms, searchedParams }) {
           <MakeReservationForm selectedRoom={selectedRoom} searchedParams={searchedParams} />
         </div>
         <div className="w-1/4">
-          <SelectedRoom />
           <div className='my-8'>
+            <div>
+              <img src={selectedRoom.room_image} alt={selectedRoom.room_name}/>
+            </div>
             <h2>{selectedRoom.room_name}</h2>
             <h3>Price: ${selectedRoom.room_price}</h3>
           </div>

@@ -31,8 +31,8 @@ function App() {
       <AuthProvider>
         <Routes>
           <Route path='*' element={<NoRoute />} />
-          <Route path='/' element={<Home setAvailableRoomsHome={setAvailableRooms} setSearchedParams={setSearchedParams}/>} />
-          <Route path='/rooms' element={<RoomsPage setAvailableRoomsRoom={setAvailableRooms} setSearchedParams={setSearchedParams} />} />
+          <Route path='/' element={<Home setAvailableRooms={setAvailableRooms} setSearchedParams={setSearchedParams}/>} />
+          <Route path='/rooms' element={<RoomsPage setAvailableRooms={setAvailableRooms} setSearchedParams={setSearchedParams} />} />
           <Route path='/about' element={<About />} />
           <Route path='/contact' element={<Contact />} />
           <Route path='/room/:roomId' element={<Book availableRooms={availableRooms} searchedParams={searchedParams}/>} />

@@ -51,7 +51,7 @@ const Searchbar = (props) => {
 
         try {
             const response = await axios.post('http://127.0.0.1:8000/api/rooms/available_rooms/', values);
-            { props.setAvailableRoomsHome(response.data.rooms) };
+            { props.setAvailableRooms(response.data.rooms) };
             { props.setSearchedParams(values) };
             navigate('/rooms/available');
 

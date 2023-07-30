@@ -44,9 +44,9 @@ const HomeNavbar = () => {
           <button onClick={logoutUser}>Logout</button>
           </>
         ): (
-          <Link to="/login" >Login</Link>
+          <Link className="login-btn" to="/login" >Login</Link>
         )}
-        <Link to='/adminpanel'><BsPerson size={20} /></Link>
+        <Link to='/adminpanel'><BsPerson size={40} /></Link>
       </div>
 
       {/* Hamburger */}

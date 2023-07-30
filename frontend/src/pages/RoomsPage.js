@@ -1,16 +1,20 @@
 import React from 'react'
 import Navbar from '../components/Navbar'
-import RoomBlock from '../components/RoomBlock'
-import ReserveBtn from '../components/ReserveBtn'
 import Searchbar from '../components/Searchbar'
+import RoomList from '../components/RoomList'
 
-function RoomsPage() {
+function RoomsPage(props) {
   return (
     <div>
+      <div>
         <Navbar />
-        <Searchbar />
-        <ReserveBtn />
-        <RoomBlock />
+      </div>
+      <div>
+        <Searchbar setAvailableRooms={props.setAvailableRooms} setSearchedParams={props.setSearchedParams} />
+      </div>
+      <div>
+        <RoomList />
+      </div>
     </div>
   )
 }

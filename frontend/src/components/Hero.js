@@ -22,7 +22,7 @@ const Hero = (props) => {
         <h1>First Class Travel</h1>
         <h2 className='py-4'>Top 1% Resort in Anuradhapura</h2>
 
-        <Searchbar setAvailableRoomsHome={props.setAvailableRoomsHome} setSearchedParams={props.setSearchedParams}/>
+        <Searchbar setAvailableRooms={props.setAvailableRooms} setSearchedParams={props.setSearchedParams}/>
 
         {/* <form
           className='flex justify-between items-center max-w-[920px] mx-auto w-100% border p-1

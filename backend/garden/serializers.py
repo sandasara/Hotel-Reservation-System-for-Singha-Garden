@@ -29,6 +29,13 @@ class CustomerSerializer(serializers.ModelSerializer):
         model = Customer
         fields = '__all__'
 
+class RoomSerializer(serializers.ModelSerializer):
+    amenities = serializers.StringRelatedField(many=True)
+
+    class Meta:
+        model = Room
+        fields = '__all__'
+
 
 # class CustomUserSerializer(serializers.ModelSerializer):
 #     class Meta:

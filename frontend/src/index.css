@@ -37,6 +37,19 @@
     button {
       @apply p-3 border bg-gradient-to-r from-[var(--primary-dark)] to-[var(--primary-light)] text-white rounded-md
     }
+
+    .login-btn {
+      @apply text-white px-4 py-2 rounded border border-white; /* Apply Tailwind classes */
+      font-size: 14px; /* Set the desired font size for the button */
+      margin-left: 8px; /* Add a left margin to create space between the button and the "Account" link */
+      text-decoration: none; /* Remove default underline */
+      cursor: pointer; /* Optional: Change cursor on hover */
+    }
+    
+    .login-btn:hover {
+      @apply bg-white text-black; /* Optional: Apply Tailwind classes on hover */
+    }
+
     .icon {
       @apply text-2xl cursor-pointer
     }

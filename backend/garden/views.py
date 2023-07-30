@@ -1,6 +1,7 @@
 from rest_framework.decorators import api_view, permission_classes
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.views import APIView
+from rest_framework.generics import ListAPIView
 from rest_framework.response import Response
 from django.http import JsonResponse
 
@@ -48,6 +49,10 @@ def create_customer(request):
         return Response(serializer.data, status=201)
     return Response(serializer.errors, status=400)
 
+class RoomListView(ListAPIView):
+    queryset = Room.objects.all()
+    serializer_class = RoomSerializer
+
 # pylint: disable=E1101
 @csrf_exempt
 def search_rooms(request):
@@ -90,10 +95,12 @@ def search_rooms(request):
                 price_per_day = room.room_price
                 number_of_days = (check_out_date - check_in_date).days
                 total_price = price_per_day * number_of_days
+                room_image_url = room.room_image.url if room.room_image else None
 
                 room_data.append({
                     'room_id': room.room_id,
                     'room_name': room.room_name,
+                    'room_image': room_image_url,
                     'room_price': room.room_price,
                     'number_of_days': number_of_days,
                     'total_price': total_price,

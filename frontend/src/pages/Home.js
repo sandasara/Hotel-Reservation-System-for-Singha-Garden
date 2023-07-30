@@ -10,7 +10,7 @@ function Home(props) {
   return (
     <div>
       <HomeNavbar />
-      <Hero setAvailableRoomsHome={props.setAvailableRoomsHome} setSearchedParams={props.setSearchedParams} />
+      <Hero setAvailableRooms={props.setAvailableRooms} setSearchedParams={props.setSearchedParams} />
       <Rooms />
       <Search />
       <Footer />
