@@ -9,7 +9,7 @@ from django.contrib.auth import get_user_model
 
 #     class Meta:
 #         model = User
-#         fields = ('id', 'username', 'email', 'password', 'user_type')
+#         fields = ('id', 'username', 'email', 'password', 'role)
 
 # class UserLoginSerializer(serializers.Serializer):
 #     email = serializers.EmailField()
@@ -18,6 +18,20 @@ from django.contrib.auth import get_user_model
 #     class meta:
 #         model = User
 #         fields = ('email', 'password')
+
+class UserSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True)
+
+    class Meta:
+        model = User
+        fields = ('id', 'username', 'email', 'password', 'role')
+
+    def create(self, validated_data):
+        password = validated_data.pop('password')
+        user = User(**validated_data)
+        user.set_password(password)
+        user.save()
+        return user
 
 class ReservationSerializer(serializers.ModelSerializer):
     class Meta:
@@ -37,10 +51,10 @@ class RoomSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-# class CustomUserSerializer(serializers.ModelSerializer):
+# class UserSerializer(serializers.ModelSerializer):
 #     class Meta:
-#         model = CustomUser
-#         fields = ('username', 'password', 'user_type', 'is_active', 'is_staff', 'email')
+#         model = User
+#         fields = ('username', 'password', 'role', 'is_active', 'is_staff', 'email', 'id')
 #         extra_kwargs = {'password': {'write_only': True}}
     
 #     def create(self, validated_data):

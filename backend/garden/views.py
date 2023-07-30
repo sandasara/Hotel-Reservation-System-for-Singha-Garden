@@ -10,6 +10,7 @@ from rest_framework import permissions
 from rest_framework.permissions import IsAuthenticated
 
 from rest_framework.authtoken.models import Token
+from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import authenticate
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
@@ -49,11 +50,11 @@ def create_customer(request):
         return Response(serializer.data, status=201)
     return Response(serializer.errors, status=400)
 
+# pylint: disable=E1101
 class RoomListView(ListAPIView):
     queryset = Room.objects.all()
     serializer_class = RoomSerializer
 
-# pylint: disable=E1101
 @csrf_exempt
 def search_rooms(request):
     """
@@ -117,6 +118,34 @@ def search_rooms(request):
 # -------------------------------------------------------------------------------------------------------------------
 # Authentication and authorization
 
+class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
+    @classmethod
+    def get_token(cls, user):
+        token = super().get_token(user)
+
+        # Add custom claims
+        token['username'] = user.username
+        token['role'] = user.role
+        token['email'] = user.email
+        # ...
+
+        return token
+
+
+class MyTokenObtainPairView(TokenObtainPairView):
+    serializer_class = MyTokenObtainPairSerializer
+
+
+@api_view(['POST'])
+def user_registration(request):
+    serializer = UserSerializer(data=request.data)
+    print(serializer)
+    if serializer.is_valid():
+        user = serializer.save()
+        refresh = RefreshToken.for_user(user)
+        access_token = str(refresh.access_token)
+        return Response({'access_token': access_token}, status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 # class UserRegistrationView(APIView):
@@ -201,30 +230,3 @@ def search_rooms(request):
 #             return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
 
 #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-
-class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
-    @classmethod
-    def get_token(cls, user):
-        token = super().get_token(user)
-
-        # Add custom claims
-        token['username'] = user.username
-        # ...
-
-        return token
-
-
-class MyTokenObtainPairView(TokenObtainPairView):
-    serializer_class = MyTokenObtainPairSerializer
-
-
-@api_view(['GET'])
-def getRoutes(request):
-    routes = [
-        '/api/token',
-        '/api/token/refresh',
-    ]
-
-    return Response(routes)

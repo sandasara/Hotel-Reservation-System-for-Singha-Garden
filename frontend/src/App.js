@@ -41,8 +41,7 @@ function App() {
           <Route path='/rooms/available' element={<AvailableRooms availableRooms={availableRooms}/>} />
           <Route path='/payment' element={<Payment />} />
           <Route path='/adminpanel' element={<AdminPanel />} />
-          <Route path='/register' element={<CustomerRegistration />} />
-          <Route path='/registerform' element={<Registration />} />
+          <Route path='/register' element={<Registration />} />
           <Route path='/login' element={<LoginForm />} />
         </Routes>
       </AuthProvider>

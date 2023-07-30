@@ -8,6 +8,108 @@ from django.contrib.auth import get_user_model
 
 # Create your models here.
 
+# Authentication and autherization
+
+class UserManager(BaseUserManager):
+    def create_user(self, email, password=None, **extra_fields):
+        if not email:
+            raise ValueError("The Email field must be set")
+        email = self.normalize_email(email)
+        user = self.model(email=email, **extra_fields)
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+
+    def create_superuser(self, email, password=None, **extra_fields):
+        extra_fields.setdefault("is_staff", True)
+        extra_fields.setdefault("is_superuser", True)
+
+        if extra_fields.get("is_staff") is not True:
+            raise ValueError("Superuser must have is_staff=True.")
+        if extra_fields.get("is_superuser") is not True:
+            raise ValueError("Superuser must have is_superuser=True.")
+
+        return self.create_user(email, password, **extra_fields)
+
+class User(AbstractUser):
+    class Role(models.TextChoices):
+        ADMIN = "ADMIN", "Admin"
+        CUSTOMER = "CUSTOMER", "Registered_Customer"
+        RECEPTIONIST = "RECEPTIONIST", "Receptionist"
+
+    # base_role = Role.ADMIN
+
+    role = models.CharField(max_length=50, choices=Role.choices)
+
+    objects = UserManager()
+
+    # def save(self, *args, **kwargs):
+    #     if not self.pk:
+    #         self.role = self.base_role
+    #         return super().save(*args, **kwargs)
+
+
+# class RegisteredCustomerManager(BaseUserManager):
+#     def get_queryset(self, *args, **kwargs):
+#         results = super().get_queryset(*args, **kwargs)
+#         return results.filter(role=User.Role.CUSTOMER)
+
+
+# class RegisteredCustomer(User):
+
+#     base_role = User.Role.CUSTOMER
+
+#     RegisteredCustomer = RegisteredCustomerManager()
+
+#     class Meta:
+#         proxy = True
+
+#     def welcome(self):
+#         return "Only for Customers"
+
+# # pylint: disable=E1101
+# @receiver(post_save, sender=RegisteredCustomer)
+# def create_user_profile(sender, instance, created, **kwargs):
+#     if created and instance.role == "CUSTOMER":
+#         RegisteredCustomerProfile.objects.create(user=instance)
+
+
+# class RegisteredCustomerProfile(models.Model):
+#     user = models.OneToOneField(User, on_delete=models.CASCADE)
+#     Customer_id = models.IntegerField(null=True, blank=True)
+
+
+# class ReceptionistManager(BaseUserManager):
+#     def get_queryset(self, *args, **kwargs):
+#         results = super().get_queryset(*args, **kwargs)
+#         return results.filter(role=User.Role.RECEPTIONIST)
+
+
+# class Receptionist(User):
+
+#     base_role = User.Role.RECEPTIONIST
+
+#     teacher = ReceptionistManager()
+
+#     class Meta:
+#         proxy = True
+
+#     def welcome(self):
+#         return "Only for teachers"
+
+
+# class ReceptionistProfile(models.Model):
+#     user = models.OneToOneField(User, on_delete=models.CASCADE)
+#     receptionist_id = models.IntegerField(null=True, blank=True)
+
+# # pylint: disable=E0102
+# @receiver(post_save, sender=Receptionist)
+# def create_user_profile(sender, instance, created, **kwargs):
+#     if created and instance.role == "RECEPTIONIST":
+#         ReceptionistProfile.objects.create(user=instance)
+
+# -----------------------------------------------------------------------------------------------------------------        
+
 class Amenities(models.Model):
     amenity_id = models.AutoField(auto_created=True,
                                primary_key=True,
@@ -91,6 +193,7 @@ class RoomAmenity(models.Model):
         unique_together = ('room', 'amenity')
         verbose_name_plural = 'Room Amenity'
     
+    # pylint: disable=E1101
     def __str__(self):
         return f"{self.room.room_name} - {self.amenity.amenity_name}"
 
@@ -107,7 +210,7 @@ class CreditCard(models.Model):
 
 #----------------------------------------------------------------------------------------------------------
 
-# Authentication and autherization
+
 
 # class CustomUser(AbstractUser):
 #     USER_TYPES = (

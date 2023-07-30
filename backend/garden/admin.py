@@ -33,5 +33,6 @@ admin.site.register(Customer, CustomerAdmin)
 admin.site.register(Reservation, ReservationAdmin)
 admin.site.register(Amenities, AmenitiesAdmin)
 admin.site.register(CreditCard, CreditCardAdmin)
+admin.site.register(User)
 
 

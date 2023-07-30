@@ -13,7 +13,7 @@ urlpatterns = [
     path('rooms/available_rooms/', views.search_rooms, name='search_rooms'),
     path('rooms/', RoomListView.as_view(), name='room-list'),
     path('create_customer/', views.create_customer, name='create_customer'),
-    # path('register/', views.user_registration, name='user-registration'),
+    path('register/', views.user_registration, name='user-registration'),
     # path('login/', views.user_login, name='user-login'),
     # path('login/', UserLoginView.as_view(), name='login'),
     # path('api/', include(router.urls)),

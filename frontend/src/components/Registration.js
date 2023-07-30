@@ -9,14 +9,13 @@ const RegistrationForm = () => {
     username: '',
     email: '',
     password: '',
-    user_type: '',
+    role: 'CUSTOMER',
   };
 
   const validationSchema = Yup.object().shape({
     username: Yup.string().required('Username is required'),
     email: Yup.string().email('Invalid email').required('Email is required'),
     password: Yup.string().required('Password is required'),
-    user_type: Yup.string().required('User type is required'),
   });
 
   const handleSubmit = async (values) => {
@@ -50,16 +49,6 @@ const RegistrationForm = () => {
             <label htmlFor="password">Password</label>
             <Field type="password" name="password" />
             <ErrorMessage name="password" component="div" />
-          </div>
-          <div>
-            <label htmlFor="user_type">User Type</label>
-            <Field as="select" name="user_type">
-              <option value="">Select User Type</option>
-              <option value="manager">Manager</option>
-              <option value="receptionist">Receptionist</option>
-              <option value="customer">Customer</option>
-            </Field>
-            <ErrorMessage name="user_type" component="div" />
           </div>
           <button type="submit">Register</button>
         </Form>
