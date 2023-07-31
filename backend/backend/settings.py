@@ -192,6 +192,8 @@ CORS_ORIGIN_WHITELIST = (
     'http://localhost:3000',
 )
 
+CORS_ORIGIN_ALLOW_ALL = True
+
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': 'dekgo2xty',
     'API_KEY': '689489959393972',

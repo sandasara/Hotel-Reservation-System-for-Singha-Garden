@@ -35,6 +35,7 @@ function App() {
           <Route path='/rooms' element={<RoomsPage setAvailableRooms={setAvailableRooms} setSearchedParams={setSearchedParams} />} />
           <Route path='/about' element={<About />} />
           <Route path='/contact' element={<Contact />} />
+          <Route path='/room/logged/:roomId' element={<LoggedBook availableRooms={availableRooms} searchedParams={searchedParams}/>} />
           <Route path='/room/:roomId' element={<Book availableRooms={availableRooms} searchedParams={searchedParams}/>} />
           <Route path='/reservations' element={<ReservationList />} />
           <Route path='/reservations/:id' element={<GetSingleReservation />} />

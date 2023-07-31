@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { useContext } from 'react';
+import AuthContext from '../context/AuthContext'
 import Navbar from '../components/Navbar';
 import ReserveBtn from '../components/ReserveBtn';
 import { Link } from 'react-router-dom';
 
 const AvailableRooms = ({ availableRooms }) => {
+  let {user} = useContext(AuthContext)
   if (!availableRooms || availableRooms.length === 0) {
     return (
       <div>
@@ -30,7 +32,13 @@ const AvailableRooms = ({ availableRooms }) => {
                 <div>
                   <div className="flex items-center mb-4">
                     <h2 className="mr-4">{room.room_name}</h2>
-                    <Link to={`/room/${room.room_id}`}><ReserveBtn/></Link>
+                      {user ? (
+                          <>
+                          <Link to={`/room/logged/${room.room_id}`}><ReserveBtn/></Link>
+                          </>
+                        ): (
+                          <Link to={`/room/${room.room_id}`}><ReserveBtn/></Link>
+                        )}
                   </div>
                   <h3>Total price: ${room.total_price}</h3>
                   <p>Nights: {room.number_of_days}</p>
