@@ -7,7 +7,7 @@ const ReservationPage = () => {
 
   useEffect(() => {
     // Make a GET request to fetch user data
-    axios.get('/api/get_user/') // Replace '/api/user/' with your backend API endpoint to fetch user data
+    axios.get('http://127.0.0.1:8000/api/get_user') // Replace '/api/user/' with your backend API endpoint to fetch user data
       .then(response => {
         setUserData(response.data);
       })

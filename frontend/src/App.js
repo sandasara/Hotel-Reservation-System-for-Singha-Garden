@@ -19,7 +19,7 @@ import Payment from './pages/Payment';
 import Registration from './components/Registration';
 import LoginForm from './components/LoginForm';
 import LoggedBook from './pages/LoggedBook';
-
+import CustomerProfile from './components/CustomerProfile';
 
 function App() {
 
@@ -44,6 +44,7 @@ function App() {
           <Route path='/adminpanel' element={<AdminPanel />} />
           <Route path='/register' element={<Registration />} />
           <Route path='/login' element={<LoginForm />} />
+          <Route path='/user_profile' element={<CustomerProfile />} />
         </Routes>
       </AuthProvider>
     </BrowserRouter>

@@ -46,7 +46,7 @@ const HomeNavbar = () => {
         ): (
           <Link className="login-btn" to="/login" >Login</Link>
         )}
-        <Link to='/adminpanel'><BsPerson size={40} /></Link>
+        <Link to='/user_profile'><BsPerson size={40} /></Link>
       </div>
 
       {/* Hamburger */}

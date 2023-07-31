@@ -24,7 +24,30 @@ from .serializers import *
 from .models import *
 import json
 
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_user_profile(request):
+    user = request.user
+    # Assuming you have the necessary fields in the User model to display in the profile.
+    customer_details = {
+        'username': user.username,
+        'email': user.email,
+        # Add other fields here.
+    }
+    return Response(customer_details)
 
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_user_data(request):
+    user = request.user
+    data = {
+        'id': user.id,
+        'username': user.username,
+        'email': user.email,
+        'first_name': user.first_name,
+        # Add other user fields you want to include in the response
+    }
+    return Response(data)
 
 @api_view(['POST'])
 def create_reservation(request):
