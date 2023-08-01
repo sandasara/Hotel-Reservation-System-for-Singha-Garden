@@ -66,7 +66,10 @@ class RoomSerializer(serializers.ModelSerializer):
         model = Room
         fields = '__all__'
 
-
+class FeedbackSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Feedback
+        fields = ['name', 'email', 'feedback']
 # class UserSerializer(serializers.ModelSerializer):
 #     class Meta:
 #         model = User

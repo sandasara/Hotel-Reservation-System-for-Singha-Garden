@@ -63,6 +63,28 @@ const CustomerReservations = () => {
         }
     };
 
+    const handleDelete = async (reservationId) => {
+        try {
+            const response = await axios.delete(`http://127.0.0.1:8000/api/reservations/delete/${reservationId}/`, {
+                headers: {
+                    'Authorization': `Bearer ${authTokens.access}`,
+                },
+            });
+    
+            if (response.status === 200) {
+                // Provide feedback to the user about the success of the deletion.
+                console.log('Reservation deleted successfully!');
+                // Refetch the reservations after deleting
+                fetchReservations();
+            } else {
+                // Provide feedback to the user about the failure of the deletion.
+                console.error('Failed to delete reservation');
+            }
+        } catch (error) {
+            console.error('Error while deleting reservation', error);
+        }
+    };
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setEditingReservation((prevReservation) => ({
@@ -151,6 +173,14 @@ const CustomerReservations = () => {
                         <button className="px-2 py-1 bg-green-500 text-white rounded" onClick={() => handleEdit(reservation)}>
                             Edit
                         </button>
+                    </td>
+                    <td className="border px-4 py-2">
+                    <button
+                        className="px-2 py-1 bg-red-500 text-white rounded"
+                        onClick={() => handleDelete(reservation.reservation_id)}
+                    >
+                        Delete
+                    </button>
                     </td>
                 </tr>
             );

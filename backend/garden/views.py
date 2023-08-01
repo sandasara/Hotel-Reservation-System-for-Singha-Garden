@@ -125,6 +125,19 @@ class ReservationDetailView(APIView):
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+@api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
+def delete_reservation(request, reservation_id):
+    try:
+        reservation = Reservation.objects.get(reservation_id=reservation_id)
+        reservation.delete()
+        return Response({'message': 'Reservation deleted successfully.'}, status=200)
+    except Reservation.DoesNotExist:
+        return Response({'error': 'Reservation not found.'}, status=404)
+    except Exception as e:
+        return Response({'error': 'An error occurred while deleting the reservation.'}, status=500)
+
+
 class RoomDetailView(APIView):
     def get(self, request, room_id):
         try:
@@ -244,7 +257,13 @@ def user_registration(request):
         return Response({'access_token': access_token}, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
+class FeedbackView(APIView):
+    def post(self, request, format=None):
+        serializer = FeedbackSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 # class UserRegistrationView(APIView):
 #     def post(self, request):
 #         serializer = CustomUserSerializer(data=request.data)

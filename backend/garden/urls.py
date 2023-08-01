@@ -10,6 +10,7 @@ urlpatterns = [
     path('reservations/create_user_reservation/', views.create_user_reservation, name="create-reservation"),
     path('reservations/create_customer_reservation/', views.create_customer_reservation, name="create-reservation"),
     path('reservations/<int:reservation_id>/', ReservationDetailView.as_view(), name='update_reservation'),
+    path('reservations/delete/<int:reservation_id>/', views.delete_reservation, name='delete_reservation'),
     # path('reservations/<str:pk>/update/', views.update_reservation, name='update-reservation'),
     # path('reservations/', views.get_reservations_list, name='list-reservations'),
     # path('reservations/<str:pk>', views.get_reservation, name='get-reservation'),
@@ -24,4 +25,6 @@ urlpatterns = [
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('get_user_profile/', views.get_user_profile, name='get_user_data'),
     path('get_customer_reservations/', views.get_customer_reservations, name='get_customer_reservations'),
+    path('feedback/', views.FeedbackView.as_view(), name='feedback'),
+
 ]

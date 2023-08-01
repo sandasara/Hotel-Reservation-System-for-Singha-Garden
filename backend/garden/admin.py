@@ -23,11 +23,14 @@ class ReservationAdmin(admin.ModelAdmin):
 class AmenitiesAdmin(admin.ModelAdmin):
     list_display = ['amenity_id', 'amenity_name']
 
+class FeedbackAdmin(admin.ModelAdmin):
+    list_display = ['feedback_id', 'name', 'email', 'feedback']
+
 # admin.site.register(CustomUser)
 admin.site.register(Room, RoomAdmin)
 admin.site.register(Customer, CustomerAdmin)
 admin.site.register(Reservation, ReservationAdmin)
 admin.site.register(Amenities, AmenitiesAdmin)
 admin.site.register(User)
-
+admin.site.register(Feedback, FeedbackAdmin)
 

@@ -3,10 +3,10 @@ import { useFormik} from 'formik';
 import axios from 'axios';
 import { makeReservationSchema } from '../validationschemas/MakeReservationSchema';
 import '../css/form.css'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 function MakeReservationForm({ selectedRoom, searchedParams }) {
-
+  const navigate = useNavigate()
   const onSubmit = async (values) => {
     try {
       const mappedCustomerData = {
@@ -41,6 +41,9 @@ function MakeReservationForm({ selectedRoom, searchedParams }) {
       const reservationResponse = await axios.post('http://127.0.0.1:8000/api/reservations/create_customer_reservation/', mappedReservationData);
       const reservationData = reservationResponse.data;
       console.log('Reservation record created:', reservationData.reservation_id);
+      alert("Reservation made");
+      navigate('/')
+
 
     } catch (error) {
         console.log(error);

@@ -204,6 +204,18 @@ class RoomAmenity(models.Model):
     # pylint: disable=E1101
     def __str__(self):
         return f"{self.room.room_name} - {self.amenity.amenity_name}"
+    
+class Feedback(models.Model):
+    feedback_id = models.AutoField(auto_created=True,
+                                   primary_key=True,
+                                   serialize=False,
+                                   verbose_name='Customer ID')
+    name = models.CharField(max_length=50)
+    email = models.EmailField(max_length=254)
+    feedback = models.CharField(max_length=2000)
+
+    def __str__(self):
+        return str(self.feedback_id)
 
 #----------------------------------------------------------------------------------------------------------
 
