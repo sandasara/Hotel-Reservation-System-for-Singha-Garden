@@ -94,7 +94,7 @@ const ReservationPage = ({ selectedRoom, searchedParams }) => {
               
               console.log(mappedReservationData)
 
-              const reservationResponse = await axios.post('http://127.0.0.1:8000/api/reservations/create/', mappedReservationData);
+              const reservationResponse = await axios.post('http://127.0.0.1:8000/api/reservations/create_user_reservation/', mappedReservationData);
               const reservationData = reservationResponse.data;
               console.log('Reservation record created:', reservationData.reservation_id);
 

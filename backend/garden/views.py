@@ -85,6 +85,30 @@ def create_reservation(request):
     return Response(serializer.errors, status=400)
 
 @api_view(['POST'])
+def create_user_reservation(request):
+    """
+    Create a reservations
+    """
+    serializer = UserReservationSerializer(data=request.data)
+
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status=201)
+    return Response(serializer.errors, status=400)
+
+@api_view(['POST'])
+def create_customer_reservation(request):
+    """
+    Create a reservations
+    """
+    serializer = CustomerReservationSerializer(data=request.data)
+
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status=201)
+    return Response(serializer.errors, status=400)
+
+@api_view(['POST'])
 def create_customer(request):
     """
     Create a customer
