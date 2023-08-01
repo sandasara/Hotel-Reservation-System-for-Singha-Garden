@@ -167,9 +167,9 @@ class Reservation(models.Model):
                                       primary_key=True,
                                       serialize=False,
                                       verbose_name='Reservation ID')
-    room = models.ForeignKey(Room, null=True, on_delete=models.SET_DEFAULT, default="0")
-    customer = models.ForeignKey(Customer, null=True, on_delete=models.SET_DEFAULT, default="0")
-    user_id = models.ForeignKey(User, null=True, on_delete=models.SET_DEFAULT, default="0"),
+    room = models.ForeignKey(Room, null=True, on_delete=models.SET_DEFAULT, default=None)
+    customer = models.ForeignKey(Customer, null=True, on_delete=models.SET_DEFAULT, default=None)
+    user = models.ForeignKey(User, null=True, on_delete=models.SET_DEFAULT, default=None)
     check_in = models.DateField()
     check_out = models.DateField()
     adults = models.IntegerField()

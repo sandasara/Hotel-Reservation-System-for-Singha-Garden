@@ -31,7 +31,7 @@ def get_user_profile(request):
     print(request)
     # Assuming you have the necessary fields in the User model to display in the profile.
     customer_details = {
-        'u_id' : user.id,
+        'user_id' : user.id,
         'username': user.username,
         'first_name': user.first_name,
         'last_name': user.last_name,
@@ -62,6 +62,7 @@ def get_user_data(request):
     }
     return Response(data)
 
+# pylint: disable=E1101
 @api_view(['GET'])
 # @permission_classes([IsAuthenticated])
 def get_customer_reservations(request):

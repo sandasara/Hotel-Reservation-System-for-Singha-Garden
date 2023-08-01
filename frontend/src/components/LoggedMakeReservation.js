@@ -1,8 +1,9 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { Formik, Form, Field } from 'formik';
+import axios from 'axios';
 import AuthContext from '../context/AuthContext'
 
-const ReservationPage = () => {
+const ReservationPage = ({ selectedRoom, searchedParams }) => {
   let { user, authTokens } = useContext(AuthContext)
   const [userData, setUserData] = useState(null);
   const [customerDetails, setCustomerDetails] = useState(null);
@@ -58,6 +59,8 @@ const ReservationPage = () => {
   console.log(customerDetails)
   // Render the Formik form with initial values as the fetched user data
  
+
+  
   return (
     <div>
       {customerDetails && (
@@ -77,6 +80,30 @@ const ReservationPage = () => {
             // Add other form fields here based on your form structure
           }}
           onSubmit={(values) => {
+            const onSubmit = async (values) => {
+            try {
+              const mappedReservationData = {
+                room: selectedRoom.room_id,
+                user: customerDetails.user_id,
+                check_in: searchedParams.checkIn,
+                check_out: searchedParams.checkOut,
+                adults: searchedParams.adults,
+                children: searchedParams.children,
+                special_info: values.specialinfo,
+                payment_method: values.payMethod,
+              }
+              
+              console.log(mappedReservationData)
+
+              const reservationResponse = await axios.post('http://127.0.0.1:8000/api/reservations/create/', mappedReservationData);
+              const reservationData = reservationResponse.data;
+              console.log('Reservation record created:', reservationData.reservation_id);
+
+            } catch (error) {
+                console.log(error);
+            }
+  };
+            console.log(values)
             // Handle form submission here
           }}
         >
@@ -85,7 +112,7 @@ const ReservationPage = () => {
              <label htmlFor="firstName" className="block font-medium text-gray-700">First Name:</label>
              <Field type="text" name="firstName" className="w-full mt-1 border rounded-md p-2" />
 
-             <label htmlFor="lasttName" className="block font-medium text-gray-700">Last Name:</label>
+             <label htmlFor="lastName" className="block font-medium text-gray-700">Last Name:</label>
              <Field type="text" name="lastName" className="w-full mt-1 border rounded-md p-2" />
 
              <label htmlFor="email" className="block font-medium text-gray-700">Email:</label>

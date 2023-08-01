@@ -68,7 +68,7 @@ const CustomerProfilePanel = () => {
                             </div>
                             <div class="grid grid-cols-2">
                                 <div class="px-4 py-2 font-semibold">Email</div>
-                                <a class="text-blue-800" href="mailto:jane@example.com">Email{customerDetails.email}</a>
+                                <a class="text-blue-800" href="mailto:jane@example.com">{customerDetails.email}</a>
                             </div>
                             <div class="grid grid-cols-2">
                                 <div class="px-4 py-2 font-semibold">Contact No.</div>

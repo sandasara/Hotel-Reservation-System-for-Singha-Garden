@@ -19,7 +19,7 @@ class CustomerAdmin(admin.ModelAdmin):
     list_display = ['customer_id', 'first_name', 'last_name', 'email', 'phone', 'address', 'city', 'country', 'zip_code']
 
 class ReservationAdmin(admin.ModelAdmin):
-    list_display = ['reservation_id', 'room', 'customer', 'check_in', 'check_out', 'adults', 'children','standing', 'Updated_on', 'Reserved_on']
+    list_display = ['reservation_id', 'room', 'customer', 'user', 'check_in', 'check_out', 'adults', 'children','standing', 'Updated_on', 'Reserved_on']
 
 class AmenitiesAdmin(admin.ModelAdmin):
     list_display = ['amenity_id', 'amenity_name']
