@@ -19,6 +19,11 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 from django.db.models import Q
 from django.db.models import Prefetch
 
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
+from django.conf import settings
+
 from datetime import datetime
 from .serializers import *
 from .models import *
@@ -77,7 +82,21 @@ def create_user_reservation(request):
     serializer = UserReservationSerializer(data=request.data)
 
     if serializer.is_valid():
-        serializer.save()
+        reservation  = serializer.save()
+
+        subject = 'Reservation Confirmation'
+        context = {
+            'customer_name': reservation.customer.first_name,
+            'reservation_id': reservation.reservation_id,
+            'room_name': reservation.room.room_name,
+            'check_in': reservation.check_in,
+            'check_out': reservation.check_out,
+            # Add more reservation data as needed
+        }
+        html_message = render_to_string('reservation_confirmation_email.html', context)
+        plain_message = strip_tags(html_message)
+        send_mail(subject, plain_message, settings.EMAIL_HOST_USER, [reservation.customer.email], html_message=html_message)
+
         return Response(serializer.data, status=201)
     return Response(serializer.errors, status=400)
 
@@ -106,6 +125,15 @@ class ReservationDetailView(APIView):
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+class RoomDetailView(APIView):
+    def get(self, request, room_id):
+        try:
+            room = Room.objects.get(pk=room_id)
+        except Room.DoesNotExist:
+            return Response({"error": "Room not found"}, status=status.HTTP_404_NOT_FOUND)
+
+        serializer = RoomSerializer(room)
+        return Response(serializer.data)
 
 @api_view(['POST'])
 def create_customer(request):

@@ -21,6 +21,8 @@ from django.urls import path, include
 # router = routers.DefaultRouter()
 # router.register(r'reservations', views.ReservationView, 'reservation')
 
+admin.site.site_header = "Singha Garden"
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('garden.urls'))

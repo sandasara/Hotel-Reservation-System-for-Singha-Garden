@@ -2,9 +2,13 @@
 import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
+import { makeReservationSchema } from '../validationschemas/MakeReservationSchema';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const RegistrationForm = () => {
+  const navigate = useNavigate()
+
   const initialValues = {
     username: '',
     email: '',
@@ -29,9 +33,26 @@ const RegistrationForm = () => {
 
   const handleSubmit = async (values) => {
     try {
+      const mappedUserData = {
+        username: values.username,
+        email: values.email,
+        password: values.password,
+        role: values.role,
+        first_name: values.firstName,
+        last_name: values.lastName,
+        email: values.email,
+        phone: values.tel,
+        address: values.address,
+        zip_code: values.zip,
+        city: values.city,
+        state: values.state,
+        country: values.country,
+      };     
       console.log(values);
-      const response = await axios.post('http://127.0.0.1:8000/api/register/', values);
+      const response = await axios.post('http://127.0.0.1:8000/api/register/', mappedUserData);
       console.log(response.data);
+      navigate('/')
+
       // Handle successful registration, e.g., show a success message or redirect
     } catch (error) {
       console.error(error.response.data);

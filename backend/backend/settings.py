@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -46,6 +47,20 @@ INSTALLED_APPS = [
     'cloudinary',
     'cloudinary_storage',
 ]
+
+JAZZMIN_SETTINGS = {
+    "site_header": "Singha Garden",
+    # "welcome_sign": "Welcome to My Custom Admin",
+    # "brand_color": "green",  # You can use any valid CSS color value
+    # Other Jazzmin settings
+}
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'sandasarad@gmail.com'
+EMAIL_HOST_PASSWORD = '(#Gooogle_Acc1))'
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [

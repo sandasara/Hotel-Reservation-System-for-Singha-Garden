@@ -38,7 +38,7 @@ function MakeReservationForm({ selectedRoom, searchedParams }) {
       
       console.log(mappedReservationData)
 
-      const reservationResponse = await axios.post('http://127.0.0.1:8000/api/reservations/create/', mappedReservationData);
+      const reservationResponse = await axios.post('http://127.0.0.1:8000/api/reservations/create_customer_reservation/', mappedReservationData);
       const reservationData = reservationResponse.data;
       console.log('Reservation record created:', reservationData.reservation_id);
 
@@ -58,14 +58,10 @@ function MakeReservationForm({ selectedRoom, searchedParams }) {
         city: '',
         state: '',
         country: '',
-        cardno: '',
-        expmonth: '',
-        nameoncard: '',
-        cvv: '',
         specialinfo: '',
         payMethod: '',
     },
-    // validationSchema: makeReservationSchema,
+    validationSchema: makeReservationSchema,
     onSubmit,
 })
 

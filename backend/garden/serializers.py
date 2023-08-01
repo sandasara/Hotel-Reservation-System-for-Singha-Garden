@@ -24,7 +24,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('id', 'username', 'email', 'password', 'role')
+        fields = ('id', 'username', 'email', 'password', 'role', 'first_name', 'last_name', 'phone', 'address', 'city', 'state', 'zip_code', 'country')
 
     def create(self, validated_data):
         password = validated_data.pop('password')
@@ -47,6 +47,11 @@ class CustomerReservationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Reservation
         fields = ['reservation_id', 'room', 'customer', 'check_in', 'check_out', 'adults', 'children','standing', 'Updated_on', 'Reserved_on']
+
+class CustomerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Customer
+        fields = '__all__'
 
 class ReservationUpdateSerializer(serializers.ModelSerializer):
     class Meta:

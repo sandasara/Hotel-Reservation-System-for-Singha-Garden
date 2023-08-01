@@ -42,7 +42,7 @@ export const Search = () => {
       </div>
     </div>
 
-    <div>
+    {/* <div>
         <div className='border text-center'>
             <p className='pt-2'>GET AN ADDITIONAL 10% OFF</p>
             <p className='py-4'>12 HOURS LEFT</p>
@@ -68,7 +68,7 @@ export const Search = () => {
             </div>
               <button className='w-full my-4'>Rates & Availabilities</button>
         </form>
-    </div>
+    </div> */}
   </div>
   )
 }

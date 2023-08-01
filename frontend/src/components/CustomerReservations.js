@@ -17,6 +17,7 @@ const CustomerReservations = () => {
 
           if (response.status === 200) {
               setReservations(response.data);
+
           } else {
               console.error('Failed to fetch reservations');
           }

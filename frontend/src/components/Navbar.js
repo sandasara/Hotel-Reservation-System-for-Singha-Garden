@@ -41,7 +41,7 @@ const Navbar = () => {
         {user ? (
           <>
           <p>Hi {user.username}  </p>
-          <button onClick={logoutUser}>Logout</button>
+          <button className="login-btn" onClick={logoutUser}>Logout</button>
           <Link to='/user_profile'><BsPerson size={40} /></Link>
           </>
         ): (

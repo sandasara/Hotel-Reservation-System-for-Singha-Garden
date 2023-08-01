@@ -115,8 +115,8 @@ export const makeReservationSchema = yup.object().shape({
     specialinfo: yup.string()
         .matches(/^[a-zA-Z0-9.,'"!?()\s]+$/, 'Invalid characters in description'),
 
-    paymethod: yup.string()
-        .required('Please select a payment method'),
+    // paymethod: yup.string()
+    //     .required('Please select a payment method'),
 
 //   password: yup
 //     .string()
