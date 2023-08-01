@@ -86,31 +86,31 @@ export const makeReservationSchema = yup.object().shape({
     country: yup.string()
         .required('Country is required'),
 
-    cardno: yup.string()
-        .required('Credit card number is required')
-        .test('creditCard', 'Invalid credit card number', (value) => {
-          return isLuhnValid(value.replace(/\s/g, ''));
-        }
-        ),
+    // cardno: yup.string()
+    //     .required('Credit card number is required')
+    //     .test('creditCard', 'Invalid credit card number', (value) => {
+    //       return isLuhnValid(value.replace(/\s/g, ''));
+    //     }
+    //     ),
 
-    expyear: yup.string()
-        .required('Expiration year is required')
-        .length(4, 'Expiration year must be 4 digits')
-        .matches(/^[0-9]+$/, 'Invalid expiration year'),
-        // .min(currentYear, 'Expiration year must be in the future'),
+    // expyear: yup.string()
+    //     .required('Expiration year is required')
+    //     .length(4, 'Expiration year must be 4 digits')
+    //     .matches(/^[0-9]+$/, 'Invalid expiration year'),
+    //     // .min(currentYear, 'Expiration year must be in the future'),
 
-    expmonth: yup.string()
-        .required('Expiration month is required')
-        .matches(/^(0?[1-9]|1[0-2])$/, 'Invalid expiration month'),
+    // expmonth: yup.string()
+    //     .required('Expiration month is required')
+    //     .matches(/^(0?[1-9]|1[0-2])$/, 'Invalid expiration month'),
 
-    nameoncard: yup.string()
-        .required('Name on credit card is required')
-        .matches(/^[A-Za-z]+ [A-Za-z]+$/, 'Invalid name format')
-        .max(100, 'Name on credit card must be less than 100 characters'),
+    // nameoncard: yup.string()
+    //     .required('Name on credit card is required')
+    //     .matches(/^[A-Za-z]+ [A-Za-z]+$/, 'Invalid name format')
+    //     .max(100, 'Name on credit card must be less than 100 characters'),
 
-    cvv: yup.string()
-        .required('CVV is required')
-        .matches(/^[0-9]{3,4}$/, 'Invalid CVV format'),
+    // cvv: yup.string()
+    //     .required('CVV is required')
+    //     .matches(/^[0-9]{3,4}$/, 'Invalid CVV format'),
 
     specialinfo: yup.string()
         .matches(/^[a-zA-Z0-9.,'"!?()\s]+$/, 'Invalid characters in description'),

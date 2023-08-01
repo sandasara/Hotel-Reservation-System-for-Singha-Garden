@@ -21,4 +21,5 @@ urlpatterns = [
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('get_user/', views.get_user_data, name='get_user_data'),
     path('get_user_profile/', views.get_user_profile, name='get_user_data'),
+    path('get_customer_reservations/', views.get_customer_reservations, name='get_customer_reservations'),
 ]

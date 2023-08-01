@@ -42,11 +42,11 @@ const Navbar = () => {
           <>
           <p>Hi {user.username}  </p>
           <button onClick={logoutUser}>Logout</button>
+          <Link to='/user_profile'><BsPerson size={40} /></Link>
           </>
         ): (
-          <Link to="/login" >Login</Link>
+          <Link className="login-btn" to="/login" >Login</Link>
         )}
-        <BsPerson size={20} />
       </div>
 
       {/* Hamburger */}

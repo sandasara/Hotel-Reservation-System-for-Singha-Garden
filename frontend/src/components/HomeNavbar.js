@@ -42,11 +42,11 @@ const HomeNavbar = () => {
           <>
           <p>Hi {user.username}  </p>
           <button onClick={logoutUser}>Logout</button>
+          <Link to='/user_profile'><BsPerson size={40} /></Link>
           </>
         ): (
           <Link className="login-btn" to="/login" >Login</Link>
         )}
-        <Link to='/user_profile'><BsPerson size={40} /></Link>
       </div>
 
       {/* Hamburger */}

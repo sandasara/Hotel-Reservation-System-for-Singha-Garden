@@ -28,10 +28,21 @@ import json
 @permission_classes([IsAuthenticated])
 def get_user_profile(request):
     user = request.user
+    print(request)
     # Assuming you have the necessary fields in the User model to display in the profile.
     customer_details = {
+        'u_id' : user.id,
         'username': user.username,
+        'first_name': user.first_name,
+        'last_name': user.last_name,
         'email': user.email,
+        'phone': user.phone,
+        'address': user.address,
+        'city': user.city,
+        'state': user.state,
+        'country': user.country,
+        'zip_code': user.zip_code,
+
         # Add other fields here.
     }
     return Response(customer_details)
@@ -40,6 +51,8 @@ def get_user_profile(request):
 @permission_classes([IsAuthenticated])
 def get_user_data(request):
     user = request.user
+    print(request)
+    print(request.user)
     data = {
         'id': user.id,
         'username': user.username,
@@ -48,6 +61,15 @@ def get_user_data(request):
         # Add other user fields you want to include in the response
     }
     return Response(data)
+
+@api_view(['GET'])
+# @permission_classes([IsAuthenticated])
+def get_customer_reservations(request):
+    user_id = request.user.id  # Get the ID of the logged-in user
+    reservations = Reservation.objects.filter(customer_id=user_id)  # Filter reservations based on user ID
+    serializer = ReservationSerializer(reservations, many=True)
+    return Response(serializer.data)
+
 
 @api_view(['POST'])
 def create_reservation(request):

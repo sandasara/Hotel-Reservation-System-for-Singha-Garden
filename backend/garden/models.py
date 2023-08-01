@@ -40,6 +40,12 @@ class User(AbstractUser):
     # base_role = Role.ADMIN
 
     role = models.CharField(max_length=50, choices=Role.choices)
+    phone = models.CharField(max_length=12)
+    address = models.CharField(max_length=100)
+    city = models.CharField(max_length=100)
+    state = models.CharField(max_length=100)
+    country = models.CharField(max_length=100)
+    zip_code = models.CharField(max_length=20)
 
     objects = UserManager()
 
@@ -163,6 +169,7 @@ class Reservation(models.Model):
                                       verbose_name='Reservation ID')
     room = models.ForeignKey(Room, null=True, on_delete=models.SET_DEFAULT, default="0")
     customer = models.ForeignKey(Customer, null=True, on_delete=models.SET_DEFAULT, default="0")
+    user_id = models.ForeignKey(User, null=True, on_delete=models.SET_DEFAULT, default="0"),
     check_in = models.DateField()
     check_out = models.DateField()
     adults = models.IntegerField()
@@ -196,17 +203,6 @@ class RoomAmenity(models.Model):
     # pylint: disable=E1101
     def __str__(self):
         return f"{self.room.room_name} - {self.amenity.amenity_name}"
-
-class CreditCard(models.Model):
-    cardno = models.CharField(primary_key=True,max_length=16, verbose_name='credit_card')
-    customer = models.ForeignKey(Customer, null=True, on_delete=models.CASCADE)
-    expmonth = models.CharField(max_length=2)
-    expyear = models.CharField(max_length=2)
-    cvv = models.CharField(max_length=3)
-
-    def __str__(self):
-        return str(self.cardno)
-
 
 #----------------------------------------------------------------------------------------------------------
 
