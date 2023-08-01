@@ -176,6 +176,7 @@ class Reservation(models.Model):
     children = models.IntegerField()
     standing = models.BooleanField(default=True, verbose_name='Standing or not')
     payment_method = models.CharField(max_length=10)
+    special_info = models.CharField(max_length=1000, null=True, default=None)
     Updated_on = models.DateTimeField(auto_now=True)
     Reserved_on = models.DateTimeField(auto_now_add=True)
 

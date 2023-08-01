@@ -79,8 +79,7 @@ const ReservationPage = ({ selectedRoom, searchedParams }) => {
             payMethod: '',
             // Add other form fields here based on your form structure
           }}
-          onSubmit={(values) => {
-            const onSubmit = async (values) => {
+          onSubmit={async  (values) => {
             try {
               const mappedReservationData = {
                 room: selectedRoom.room_id,
@@ -102,7 +101,6 @@ const ReservationPage = ({ selectedRoom, searchedParams }) => {
             } catch (error) {
                 console.log(error);
             }
-  };
             console.log(values)
             // Handle form submission here
           }}
