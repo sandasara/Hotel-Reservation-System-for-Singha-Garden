@@ -20,6 +20,7 @@ import Registration from './components/Registration';
 import LoginForm from './components/LoginForm';
 import LoggedBook from './pages/LoggedBook';
 import CustomerProfile from './components/CustomerProfile';
+import CustomerDashboard from './pages/CustomerDashboard';
 
 function App() {
 
@@ -32,19 +33,19 @@ function App() {
         <Routes>
           <Route path='*' element={<NoRoute />} />
           <Route path='/' element={<Home setAvailableRooms={setAvailableRooms} setSearchedParams={setSearchedParams}/>} />
-          <Route path='/rooms' element={<RoomsPage setAvailableRooms={setAvailableRooms} setSearchedParams={setSearchedParams} />} />
           <Route path='/about' element={<About />} />
           <Route path='/contact' element={<Contact />} />
+          <Route path='/rooms' element={<RoomsPage setAvailableRooms={setAvailableRooms} setSearchedParams={setSearchedParams} />} />
+          <Route path='/rooms/available' element={<AvailableRooms availableRooms={availableRooms}/>} />
           <Route path='/room/logged/:roomId' element={<LoggedBook availableRooms={availableRooms} searchedParams={searchedParams}/>} />
           <Route path='/room/:roomId' element={<Book availableRooms={availableRooms} searchedParams={searchedParams}/>} />
-          <Route path='/reservations' element={<ReservationList />} />
-          <Route path='/reservations/:id' element={<GetSingleReservation />} />
-          <Route path='/rooms/available' element={<AvailableRooms availableRooms={availableRooms}/>} />
+          {/* <Route path='/reservations' element={<ReservationList />} />
+          <Route path='/reservations/:id' element={<GetSingleReservation />} /> */}
           <Route path='/payment' element={<Payment />} />
           <Route path='/adminpanel' element={<AdminPanel />} />
           <Route path='/register' element={<Registration />} />
           <Route path='/login' element={<LoginForm />} />
-          <Route path='/user_profile' element={<CustomerProfile />} />
+          <Route path='/user_profile' element={<CustomerDashboard />} />
         </Routes>
       </AuthProvider>
     </BrowserRouter>

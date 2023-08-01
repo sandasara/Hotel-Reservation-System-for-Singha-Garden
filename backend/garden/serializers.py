@@ -43,9 +43,16 @@ class UserReservationSerializer(serializers.ModelSerializer):
         model = Reservation
         fields = ['reservation_id', 'room', 'user', 'check_in', 'check_out', 'adults', 'children','standing', 'Updated_on', 'Reserved_on']
 
-class CustomerReservationSerializer(ReservationSerializer):
-    class Meta(ReservationSerializer.Meta):
-        exclude = ['user']
+class CustomerReservationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Reservation
+        fields = ['reservation_id', 'room', 'customer', 'check_in', 'check_out', 'adults', 'children','standing', 'Updated_on', 'Reserved_on']
+
+class ReservationUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Reservation
+        fields = ['room','check_in', 'check_out', 'adults', 'children','standing']
+
 
 class RoomSerializer(serializers.ModelSerializer):
     amenities = serializers.StringRelatedField(many=True)

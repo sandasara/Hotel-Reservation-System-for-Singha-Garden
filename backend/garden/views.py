@@ -47,27 +47,12 @@ def get_user_profile(request):
     }
     return Response(customer_details)
 
-@api_view(['GET'])
-@permission_classes([IsAuthenticated])
-def get_user_data(request):
-    user = request.user
-    print(request)
-    print(request.user)
-    data = {
-        'id': user.id,
-        'username': user.username,
-        'email': user.email,
-        'first_name': user.first_name,
-        # Add other user fields you want to include in the response
-    }
-    return Response(data)
-
 # pylint: disable=E1101
 @api_view(['GET'])
 # @permission_classes([IsAuthenticated])
 def get_customer_reservations(request):
     user_id = request.user.id  # Get the ID of the logged-in user
-    reservations = Reservation.objects.filter(customer_id=user_id)  # Filter reservations based on user ID
+    reservations = Reservation.objects.filter(user_id=user_id)  # Filter reservations based on user ID
     serializer = ReservationSerializer(reservations, many=True)
     return Response(serializer.data)
 
@@ -107,6 +92,20 @@ def create_customer_reservation(request):
         serializer.save()
         return Response(serializer.data, status=201)
     return Response(serializer.errors, status=400)
+
+class ReservationDetailView(APIView):
+    def put(self, request, reservation_id):
+        try:
+            reservation = Reservation.objects.get(reservation_id=reservation_id)
+        except Reservation.DoesNotExist:
+            return Response({"error": "Reservation not found"}, status=status.HTTP_404_NOT_FOUND)
+
+        serializer = ReservationUpdateSerializer(reservation, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 @api_view(['POST'])
 def create_customer(request):

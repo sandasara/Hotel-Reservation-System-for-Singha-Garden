@@ -108,9 +108,6 @@ const CustomerProfilePanel = () => {
                 {/* <!-- End of profile tab --> */}
         </div>
         <div class="container mx-auto my-5 p-5">
-            <div>
-                <CustomerReservations />
-            </div>
         </div>
         </>      
   );
